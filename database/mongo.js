@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Question = require('./question-model.js');
 
+const { Schema } = mongoose;
+// mongoose.connect('mongodb://localhost/mongo');
+// mongoose.connection.once('open', () => {
+//   console.log('connected to MongoDB');
+// });
+
 const generateStarterQs = (num) => {
   const questions = [];
   for (let i = 0; i < num; i += 1) {
