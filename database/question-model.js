@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost/mongo');
+mongoose.connection.once('open', () => {
+  console.log('connected to MongoDB');
+});
 
 const questionSchema = new Schema({
   position: String,

@@ -36,13 +36,16 @@ function populateQuestionsTable() {
       text: 'What do you bring?',
     },
   ];
-  const sql = {
-    text: `INSERT INTO questions 
-    ("position", "building_type", "fire_type", "text", "created_at", "updated_at")
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-    values: [position, buildingType, fireType, text, Date.now(), Date.now()],
-  };
-  queries.push(addQuestion(sql));
+  starterQs.forEach((q => {
+    { position, buildingType, fireType, text } = q;
+    const sql = {
+      text: `INSERT INTO questions 
+      ("position", "building_type", "fire_type", "text", "created_at", "updated_at")
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      values: [position, buildingType, fireType, text, Date.now(), Date.now()],
+    };
+    queries.push(addQuestion(sql));
+  }));
 };
 
 function addQuestion(sql) {
