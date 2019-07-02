@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/mongo');
+mongoose.connect('mongodb://localhost/mongo', { useNewUrlParser: true });
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB');
 });

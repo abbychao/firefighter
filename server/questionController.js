@@ -2,14 +2,21 @@ const Question = require('../database/question-model.js');
 
 const questionController = {};
 
+questionController.test = 'test';
+
 questionController.getAll = (req, res) => {
-  // res.send('this is working, really!');
   Question.find({}, (err, docs) => {
     if (err) return res.status(404).end(err);
     return res.status(200).send(docs);
   });
 };
 
-// console.log(questionController.getAll);
+questionController.func = (req, res, next) => {
+  console.log('function in question controller');
+  next();
+};
 
-module.export = questionController;
+
+console.log('question controller from questionController.js: ' + JSON.stringify(questionController));
+
+module.exports = questionController;

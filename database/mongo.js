@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Question = require('./question-model.js');
 
-// mongoose.connect('mongodb://localhost/mongo');
-
 const generateStarterQs = (num) => {
   const questions = [];
   for (let i = 0; i < num; i += 1) {
