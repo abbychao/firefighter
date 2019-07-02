@@ -1,1 +1,1 @@
-# firefighter-study-app
+# Solo Project: Firefighter Study App
