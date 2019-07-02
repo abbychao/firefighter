@@ -3,8 +3,8 @@ const path = require('path');
 const questionController = require('./questionController.js');
 
 const app = express();
-const mongo = require('../database/mongo.js')
-mongo();
+// const resetQs = require('../database/generate-qs.js');
+// resetQs(20);
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../index.html'));

@@ -1,13 +1,8 @@
-const mongoose = require('mongoose');
 const Question = require('./question-model.js');
 
-const { Schema } = mongoose;
-// mongoose.connect('mongodb://localhost/mongo');
-// mongoose.connection.once('open', () => {
-//   console.log('connected to MongoDB');
-// });
-
-const generateStarterQs = (num) => {
+// TODO: Figure out how to delete the collection
+const resetStarterQs = (num = 20) => {
+  console.log(Question.deleteMany({}));
   const questions = [];
   for (let i = 0; i < num; i += 1) {
     const q = {};
@@ -20,6 +15,7 @@ const generateStarterQs = (num) => {
       'Axe, Halligan, Search Rope',
       'Axe, Halligan, FE Saw',
     ];
+    q.answerIndex = 1;
     q.explanation = 'Here is an explanation';
     q.createdAt = Date.now();
     q.updatedAt = Date.now();
@@ -31,6 +27,4 @@ const generateStarterQs = (num) => {
   });
 };
 
-module.exports = () => {
-  generateStarterQs();
-};
+module.exports = resetStarterQs;
