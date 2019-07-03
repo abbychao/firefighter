@@ -1,20 +1,22 @@
 import React from 'react';
-import AnswerOption from './AnswerOption'
+import QuestionOption from './QuestionOption'
 
-const Question = ({ question, options }) => {
+const Question = ({ question, options, handleClick, saveAnswer }) => {
   const contents = [];
+  let index = 0;
   options.map((option) => {
-    contents.push(<AnswerOption name="answer" text={option} />);
+    contents.push(<QuestionOption name="answer" text={option} index={index} saveAnswer={saveAnswer} />);
     contents.push(<br />);
+    index += 1;
   });
-  // contents.push(<button>Submit</button>)
   return (
     <form>
       {question}
-      <br /> <br />
+      <br />
+      <br />
       {contents}
       <br />
-      <button>Submit</button>
+      <button name="submitAnswer" handleClick={handleClick}>Submit</button>
     </form>
   );
 }
