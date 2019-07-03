@@ -11,21 +11,36 @@ class App extends Component {
       buildingType: null,
       currentQuestion: null,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
+  handleClick(e) {
+    // TODO: Refactor to choose selected position
     fetch('/api/questions/get-first')
       .then((data) => data.json())
-      .then((data) => this.setState({ ...this.state, ...data }))
+      .then((data) => this.setState({
+        ...this.state,
+        ...data,
+        screen: 'q1',
+      }))
       .catch(err => console.error(err));
+    // this.setState({
+    //   ...this.state,
+    //   position: e.target.value,
+    // });
+  }
+
+
+  componentDidMount() {
   }
 
   render() {
     const { position, fireType, screen, question, options } = this.state;
+    console.log(this.handleClick);
     return (
       <div>
         <Nav position={position} fireType={fireType} />
-        <Body screen={screen} question={question} options={options} />
+        <Body screen={screen} question={question} options={options} handleClick={this.handleClick} />
       </div>
     );
   }
