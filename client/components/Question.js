@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import AnswerOption from './AnswerOption'
 
-export default class Question extends Component {
-  render() {
-    return (
-      <div>
-        <section>Here is a question</section>
-        <input type="radio" name="answerA" /> <label>Answer A</label>
-        <br />
-        <input type="radio" name="answerB" /> <label>Answer B</label>
-        <br />
-        <input type="radio" name="answerC" /> <label>Answer C</label>
-      </div>
-    );
-  }
+const Question = ({ question, options }) => {
+  const contents = [];
+  options.map((option) => {
+    contents.push(<AnswerOption name="answer" text={option} />);
+    contents.push(<br />);
+  });
+  // contents.push(<button>Submit</button>)
+  return (
+    <form>
+      {question}
+      <br /> <br />
+      {contents}
+      <br />
+      <button>Submit</button>
+    </form>
+  );
 }
+
+export default Question;

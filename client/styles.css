@@ -1,3 +1,33 @@
 body {
   background-color: lightblue;
+  display: flex;
+  justify-content:center;
 }
+
+main {
+  max-width: 600px;
+}
+
+button {  
+  width: 90px;
+  margin: 5px;
+}
+
+#nav {
+  background: lightgray;
+  padding: 20px;
+}
+
+#body {
+  background-color: lightcyan;
+  padding: 20px;
+}
+
+#nav span {
+  padding-right: 20px;
+}
+
+#nav span label {
+  font-weight: bold;
+}
+

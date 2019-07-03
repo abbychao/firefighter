@@ -12,7 +12,7 @@ questionController.getAll = (req, res) => {
 questionController.getFirst = (req, res) => {
   Question.findOne({ id: 1 }, (err, doc) => {
     if (err) return res.status(500).end(err);
-    return res.status(200).send(doc);
+    return res.status(200).send(JSON.stringify(doc));
   });
 };
 
