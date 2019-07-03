@@ -2,10 +2,11 @@ const Question = require('./question-model.js');
 
 // TODO: Figure out how to delete the collection
 const resetStarterQs = (num = 20) => {
-  console.log(Question.deleteMany({}));
+  Question.deleteMany({});
   const questions = [];
   for (let i = 0; i < num; i += 1) {
     const q = {};
+    q.id = i + 1;
     q.position = 'Forcible Entry';
     q.buildingType = 'Taxpayer';
     q.fireType = 'Cellar Fire';
