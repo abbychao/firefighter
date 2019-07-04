@@ -1,23 +1,36 @@
 import React from 'react';
-import QuestionOption from './QuestionOption'
+import QuestionOption from './QuestionOption';
+import MyContext from './Context';
 
 const Question = ({ question, options, handleClick, saveAnswer }) => {
-  const contents = [];
-  let index = 0;
-  options.map((option) => {
-    contents.push(<QuestionOption name="answer" text={option} index={index} saveAnswer={saveAnswer} />);
-    contents.push(<br />);
-    index += 1;
-  });
+  // const contents = [];
+  // let index = 0;
+  // options.map((option) => {
+  //   contents.push(<QuestionOption name="answer" text={option} index={index} saveAnswer={saveAnswer} />);
+  //   contents.push(<br />);
+  //   index += 1;
+  // });
   return (
-    <form>
-      {question}
-      <br />
-      <br />
-      {contents}
-      <br />
-      <button name="submitAnswer" type="button" onClick={handleClick}>Submit</button>
-    </form >
+    <MyContext.Consumer>
+      {(context) => {
+        const contents = [];
+        let index = 0;
+        context.questions[context.questionIndex].options.map((option) => {
+          contents.push(<QuestionOption text={option} index={index} />);
+          contents.push(<br />);
+        });
+        return (
+          <form>
+            {context.questions[context.questionIndex].question}
+            <br />
+            <br />
+            {contents}
+            <br />
+            <button name="submitAnswer" type="button" onClick={context.handleClick}>Submit</button>
+          </form >
+        )
+      }}
+    </MyContext.Consumer>
   );
 }
 

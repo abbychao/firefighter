@@ -25,41 +25,10 @@ class MyProvider extends Component {
       }],
       questionIndex: 0,
     };
-  }
 
-  render() {
-    return (
-      <MyContext.Provider value={this.state}>
-        {this.props.children}
-      </MyContext.Provider >
-    )
-  }
-}
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {}
     this.handleClick = this.handleClick.bind(this);
     this.saveAnswer = this.saveAnswer.bind(this);
   }
-
-  // const [screen, setScreen] = useState('welcome');
-  // const [position, setPosition] = useState(null);
-  // const [currentAnswer, setCurrentAnswer] = useState(null);
-  // const [lastQuestionCorrect,  setLastAnswerCorrect] = useState(false);
-  // const [questions, setQuestions] = useState([{
-  //   id: 0,
-  //   position: '',
-  //   building_type: '',
-  //   fireType: '',
-  //   question: '',
-  //   options: [''],
-  //   answerIndex: 0,
-  //   explanation: '',
-  //   createdAt: Date.now(),
-  //   updatedAt: Date.now()
-  // }]);
 
   handleClick(e) {
     // handles answer option selection
@@ -125,6 +94,41 @@ class App extends Component {
       currentAnswer: index,
     });
   }
+  render() {
+    return (
+      <MyContext.Provider value={{
+        ...this.state,
+        handleClick: this.handleClick,
+      }}>
+        {this.props.children}
+      </MyContext.Provider >
+    )
+  }
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    // this.state = {}
+  }
+
+  // const [screen, setScreen] = useState('welcome');
+  // const [position, setPosition] = useState(null);
+  // const [currentAnswer, setCurrentAnswer] = useState(null);
+  // const [lastQuestionCorrect,  setLastAnswerCorrect] = useState(false);
+  // const [questions, setQuestions] = useState([{
+  //   id: 0,
+  //   position: '',
+  //   building_type: '',
+  //   fireType: '',
+  //   question: '',
+  //   options: [''],
+  //   answerIndex: 0,
+  //   explanation: '',
+  //   createdAt: Date.now(),
+  //   updatedAt: Date.now()
+  // }]);
+
 
   render() {
     // const { position, screen, lastQuestionCorrect } = this.state;
