@@ -1,6 +1,6 @@
 const Question = require('./question-model.js');
 
-const resetStarterQs = (num = 20) => {
+const resetStarterQs = () => {
   const questions = [];
 
   // Forcible Entry Questions

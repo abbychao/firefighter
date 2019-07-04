@@ -3,7 +3,9 @@ import Welcome from './Welcome';
 import Question from './Question';
 import Answer from './Answer';
 
-const Body = ({ screen, question, options, explanation, lastQuestionCorrect, handleClick, saveAnswer }) => {
+const Body = ({
+  screen, question, options, explanation, lastQuestionCorrect, handleClick, saveAnswer
+}) => {
 
   return (
     <section id="body">

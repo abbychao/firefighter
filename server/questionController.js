@@ -17,19 +17,19 @@ questionController.getFirst = (req, res) => {
 };
 
 questionController.getByPosition = (req, res) => {
-  let positionString;
-  switch (req.params.position) {
+  let position;
+  switch (req.params.positionCode) {
     case 'fe':
-      positionString = 'Forcible Entry';
+      position = 'Forcible Entry';
       break;
     case 'can':
-      positionString = 'Can';
+      position = 'Can';
       break;
     default:
-      positionString = 'Can';
+      position = 'Can';
       break;
   }
-  Question.find({ position: positionString }, (err, docs) => {
+  Question.find({ position }, (err, docs) => {
     if (err) return res.status(500).end(err);
     return res.status(200).send(docs);
   });

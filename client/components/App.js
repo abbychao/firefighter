@@ -10,8 +10,18 @@ class App extends Component {
       position: null,
       currentAnswer: null,
       lastQuestionCorrect: false,
-      questions: [],
-      // currentQuestion: {},
+      questions: [{
+        id: 0,
+        position: '',
+        building_type: '',
+        fireType: '',
+        question: '',
+        options: [''],
+        answerIndex: 0,
+        explanation: '',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      }],
       questionIndex: 0,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -22,32 +32,32 @@ class App extends Component {
     // handles answer option selection
     // TODO: Refactor to move this to a separate function
     if (e.target.name === "positionButton") {
-      let positionString;
+      let position;
       switch (e.target.value) {
         case 'fe':
-          positionString = 'Forcible Entry';
+          position = 'Forcible Entry';
+          break;
+        case 'can':
+          position = 'Can';
           break;
         default:
-          positionString = 'Can'
+          position = 'Can'
           break;
       }
-      const position = e.target.value;
-      // TODO: Refactor to choose selected position with e.target.value
-      fetch(`/api/questions/${position}`)
+      const positionCode = e.target.value;
+      fetch(`/api/questions/${positionCode}`)
         .then((data) => data.json())
         .then((data) => {
           return this.setState({
             ...this.state,
-            position: positionString,
+            position,
             questions: data,
-            // currentQuestion: data[0],
             screen: 'question',
           })
         })
         .catch(err => console.error(err));
 
     } else if (e.target.name === "submitAnswer") {
-      // score the question
       if (this.state.currentAnswer === this.state.questions[this.state.questionIndex].answerIndex) {
         this.setState({
           ...this.state,
@@ -63,9 +73,7 @@ class App extends Component {
       }
     } else if (e.target.name === "nextButton") {
       // TODO: show next question
-      // check if this is the last question
       if (this.state.questionIndex + 1 < this.state.questions.length) {
-        // if not, move to the next question
         this.setState({
           ...this.state,
           questionIndex: this.state.questionIndex + 1,
@@ -88,7 +96,7 @@ class App extends Component {
   render() {
     const { position, screen, lastQuestionCorrect } = this.state;
     // TODO: fix default
-    const { fireType, question, options, explanation } = this.state.questions[this.state.questionIndex] || {};
+    const { fireType, question, options, explanation } = this.state.questions[this.state.questionIndex];
     return (
       <div>
         <Nav position={position} fireType={fireType} />
