@@ -105,15 +105,13 @@ class MyProvider extends Component {
   }
 }
 
-class App extends Component {
-  render() {
-    return (
-      <MyProvider>
-        <Nav />
-        <Body />
-      </MyProvider>
-    );
-  }
+const App = () => {
+  return (
+    <MyProvider>
+      <Nav />
+      <Body />
+    </MyProvider>
+  );
 }
 
 export default App;
