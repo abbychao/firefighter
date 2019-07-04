@@ -16,8 +16,8 @@ const Question = ({ question, options, handleClick, saveAnswer }) => {
       <br />
       {contents}
       <br />
-      <button name="submitAnswer" handleClick={handleClick}>Submit</button>
-    </form>
+      <button name="submitAnswer" type="button" onClick={handleClick}>Submit</button>
+    </form >
   );
 }
 

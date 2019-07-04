@@ -13,6 +13,7 @@ const questionSchema = new Schema({
   fireType: String,
   question: String,
   options: Object,
+  answerIndex: Number,
   explanation: String,
   createdAt: Date,
   updatedAt: Date,

@@ -3,7 +3,7 @@ import Welcome from './Welcome';
 import Question from './Question';
 import Answer from './Answer';
 
-const Body = ({ screen, question, options, handleClick, saveAnswer }) => {
+const Body = ({ screen, question, options, explanation, lastQuestionCorrect, handleClick, saveAnswer }) => {
 
   return (
     <section id="body">
@@ -15,7 +15,7 @@ const Body = ({ screen, question, options, handleClick, saveAnswer }) => {
           saveAnswer={saveAnswer}
           handleClick={handleClick} />
       }
-      {screen === 'answer' && <Answer />}
+      {screen === 'answer' && <Answer explanation={explanation} lastQuestionCorrect={lastQuestionCorrect} />}
     </section>
   );
 };

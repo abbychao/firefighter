@@ -16,4 +16,11 @@ questionController.getFirst = (req, res) => {
   });
 };
 
+questionController.getByPosition = (req, res) => {
+  Question.find({ position: req.params.position }, (err, docs) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(docs);
+  });
+};
+
 module.exports = questionController;
