@@ -17,7 +17,7 @@ const Answer = ({ explanation, lastQuestionCorrect, handleClick }) => {
           <>
             <h1>{header}</h1>
             <p>{body}</p>
-            <button onClick={context.handleClick} name="nextButton">Next question</button>
+            <button onClick={context.showNextQuestion} name="nextButton">Next question</button>
           </>
         )
       }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import MyContext from './Context';
 
-const Welcome = ({ handleClick }) => {
+const Welcome = () => {
   return (
     <MyContext.Consumer>
       {(context) => (
@@ -10,11 +10,11 @@ const Welcome = ({ handleClick }) => {
           <p>Get ready to ace the Lieutenant's exam! This simulation will help you prepare.</p>
           <p>You've been called to a <b>Store Fire</b> at a <b>Taxpayer</b> building.</p>
           <p>What is your position?</p>
-          <button onClick={context.handleClick} name="positionButton" value="can" >Can</button>
-          <button onClick={context.handleClick} name="positionButton" value="fe" >Forcible Entry</button>
-          <button onClick={context.handleClick} name="positionButton" value="ov" >OV</button>
-          <button onClick={context.handleClick} name="positionButton" value="roof" >Roof</button>
-          <button onClick={context.handleClick} name="positionButton" value="lcc" >LCC</button>
+          <button onClick={context.selectPosition} name="positionButton" value="can" >Can</button>
+          <button onClick={context.selectPosition} name="positionButton" value="fe" >Forcible Entry</button>
+          <button onClick={context.selectPosition} name="positionButton" value="ov" >OV</button>
+          <button onClick={context.selectPosition} name="positionButton" value="roof" >Roof</button>
+          <button onClick={context.selectPosition} name="positionButton" value="lcc" >LCC</button>
         </ >
       )}
     </MyContext.Consumer>

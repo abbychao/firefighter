@@ -8,7 +8,7 @@ class MyProvider extends Component {
     super(props);
     this.state = {
       screen: 'welcome',
-      position: 'starting position',
+      position: null,
       currentAnswer: null,
       lastQuestionCorrect: false,
       questions: [{
@@ -26,66 +26,67 @@ class MyProvider extends Component {
       questionIndex: 0,
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.selectPosition = this.selectPosition.bind(this);
+    this.submitAnswer = this.submitAnswer.bind(this);
+    this.showNextQuestion = this.showNextQuestion.bind(this);
     this.saveAnswer = this.saveAnswer.bind(this);
   }
 
-  handleClick(e) {
-    // handles answer option selection
-    // TODO: Refactor to move this to a separate function
-    if (e.target.name === "positionButton") {
-      let position;
-      switch (e.target.value) {
-        case 'fe':
-          position = 'Forcible Entry';
-          break;
-        case 'can':
-          position = 'Can';
-          break;
-        default:
-          position = 'Can'
-          break;
-      }
-      const positionCode = e.target.value;
-      fetch(`/api/questions/${positionCode}`)
-        .then((data) => data.json())
-        .then((data) => {
-          return this.setState({
-            ...this.state,
-            position,
-            questions: data,
-            screen: 'question',
-          })
-        })
-        .catch(err => console.error(err));
-
-    } else if (e.target.name === "submitAnswer") {
-      if (this.state.currentAnswer === this.state.questions[this.state.questionIndex].answerIndex) {
-        this.setState({
-          ...this.state,
-          lastQuestionCorrect: true,
-          screen: 'answer',
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          lastQuestionCorrect: false,
-          screen: 'answer',
-        });
-      }
-    } else if (e.target.name === "nextButton") {
-      // TODO: show next question
-      if (this.state.questionIndex + 1 < this.state.questions.length) {
-        this.setState({
-          ...this.state,
-          questionIndex: this.state.questionIndex + 1,
-          screen: 'question',
-        });
-      } else {
-        // otherwise, show the end
-        console.log("That was the last question!");
-      }
+  selectPosition(e) {
+    let position;
+    switch (e.target.value) {
+      case 'fe':
+        position = 'Forcible Entry';
+        break;
+      case 'can':
+        position = 'Can';
+        break;
+      default:
+        position = 'Can'
+        break;
     }
+    const positionCode = e.target.value;
+    fetch(`/api/questions/${positionCode}`)
+      .then((data) => data.json())
+      .then((data) => {
+        return this.setState({
+          ...this.state,
+          position,
+          questions: data,
+          screen: 'question',
+        })
+      })
+      .catch(err => console.error(err));
+  }
+
+  submitAnswer() {
+    if (this.state.currentAnswer === this.state.questions[this.state.questionIndex].answerIndex) {
+      this.setState({
+        ...this.state,
+        lastQuestionCorrect: true,
+        screen: 'answer',
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        lastQuestionCorrect: false,
+        screen: 'answer',
+      });
+    }
+  }
+
+  showNextQuestion() {
+    if (this.state.questionIndex + 1 < this.state.questions.length) {
+      this.setState({
+        ...this.state,
+        questionIndex: this.state.questionIndex + 1,
+        screen: 'question',
+      });
+    } else {
+      // otherwise, show the end
+      console.log("That was the last question!");
+    }
+
   }
 
   saveAnswer(index) {
@@ -94,11 +95,15 @@ class MyProvider extends Component {
       currentAnswer: index,
     });
   }
+
   render() {
     return (
       <MyContext.Provider value={{
         ...this.state,
         handleClick: this.handleClick,
+        selectPosition: this.selectPosition,
+        submitAnswer: this.submitAnswer,
+        showNextQuestion: this.showNextQuestion,
         saveAnswer: this.saveAnswer,
       }}>
         {this.props.children}
@@ -108,45 +113,11 @@ class MyProvider extends Component {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {}
-  }
-
-  // const [screen, setScreen] = useState('welcome');
-  // const [position, setPosition] = useState(null);
-  // const [currentAnswer, setCurrentAnswer] = useState(null);
-  // const [lastQuestionCorrect,  setLastAnswerCorrect] = useState(false);
-  // const [questions, setQuestions] = useState([{
-  //   id: 0,
-  //   position: '',
-  //   building_type: '',
-  //   fireType: '',
-  //   question: '',
-  //   options: [''],
-  //   answerIndex: 0,
-  //   explanation: '',
-  //   createdAt: Date.now(),
-  //   updatedAt: Date.now()
-  // }]);
-
-
   render() {
-    // const { position, screen, lastQuestionCorrect } = this.state;
-    // const { fireType, question, options, explanation } = this.state.questions[this.state.questionIndex];
     return (
       <MyProvider>
         <Nav />
         <Body />
-        {/* <Body
-          screen={screen}
-          question={question}
-          options={options}
-          lastQuestionCorrect={lastQuestionCorrect}
-          explanation={explanation}
-          handleClick={this.handleClick}
-          saveAnswer={this.saveAnswer}
-        /> */}
       </MyProvider>
     );
   }

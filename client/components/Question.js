@@ -19,7 +19,7 @@ const Question = () => {
             <br />
             {contents}
             <br />
-            <button name="submitAnswer" type="button" onClick={context.handleClick}>Submit</button>
+            <button name="submitAnswer" type="button" onClick={context.submitAnswer}>Submit</button>
           </form >
         )
       }}
