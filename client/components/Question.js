@@ -11,6 +11,7 @@ const Question = () => {
         context.questions[context.questionIndex].options.map((option) => {
           contents.push(<QuestionOption text={option} index={index} />);
           contents.push(<br />);
+          index += 1;
         });
         return (
           <form>
