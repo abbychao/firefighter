@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MyContext from './Context';
 
 const QuestionOption = ({ text, index }) => {
+  const context = useContext(MyContext);
   return (
-    <MyContext.Consumer>
-      {(context) => (
-        <label>
-          <input type="radio" name="option" onClick={() => context.saveAnswer(index)} /> {text}
-        </label>
-      )}
-    </MyContext.Consumer>
+    <label>
+      <input type="radio" name="option" onClick={() => context.saveAnswer(index)} /> {text}
+    </label>
   )
 }
 
