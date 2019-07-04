@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MyContext from './Context'
 
 const Nav = () => {
+  const context = useContext(MyContext);
   return (
-    <MyContext.Consumer>
-      {(context) => (
-        <section id="nav">
-          <span>Position: <label>{context.position}</label></span>
-          <span>Fire Type: <label>{context.fireType}</label></span>
-        </section >
-      )}
-    </MyContext.Consumer>
+    <section id="nav">
+      <span>Position: <label>{context.questions[context.questionIndex].position}</label></span>
+      <span>Building: <label>{context.questions[context.questionIndex].buildingType}</label></span>
+      <span>Location: <label>{context.questions[context.questionIndex].fireType}</label></span>
+    </section >
   );
 }
 

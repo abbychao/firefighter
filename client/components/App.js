@@ -8,13 +8,12 @@ class MyProvider extends Component {
     super(props);
     this.state = {
       screen: 'welcome',
-      position: null,
       currentAnswer: null,
       lastQuestionCorrect: false,
       questions: [{
         id: 0,
         position: '',
-        building_type: '',
+        buildingType: '',
         fireType: '',
         question: '',
         options: [''],
@@ -31,7 +30,6 @@ class MyProvider extends Component {
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.saveAnswer = this.saveAnswer.bind(this);
   }
-
   selectPosition(e) {
     let position;
     switch (e.target.value) {
@@ -51,14 +49,12 @@ class MyProvider extends Component {
       .then((data) => {
         return this.setState({
           ...this.state,
-          position,
           questions: data,
           screen: 'question',
         })
       })
       .catch(err => console.error(err));
   }
-
   submitAnswer() {
     if (this.state.currentAnswer === this.state.questions[this.state.questionIndex].answerIndex) {
       this.setState({
@@ -74,7 +70,6 @@ class MyProvider extends Component {
       });
     }
   }
-
   showNextQuestion() {
     if (this.state.questionIndex + 1 < this.state.questions.length) {
       this.setState({
@@ -88,14 +83,12 @@ class MyProvider extends Component {
     }
 
   }
-
   saveAnswer(index) {
     this.setState({
       ...this.state,
       currentAnswer: index,
     });
   }
-
   render() {
     return (
       <MyContext.Provider value={{
