@@ -3,13 +3,6 @@ import QuestionOption from './QuestionOption';
 import MyContext from './Context';
 
 const Question = ({ question, options, handleClick, saveAnswer }) => {
-  // const contents = [];
-  // let index = 0;
-  // options.map((option) => {
-  //   contents.push(<QuestionOption name="answer" text={option} index={index} saveAnswer={saveAnswer} />);
-  //   contents.push(<br />);
-  //   index += 1;
-  // });
   return (
     <MyContext.Consumer>
       {(context) => {
