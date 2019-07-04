@@ -2,7 +2,7 @@ import React from 'react';
 import QuestionOption from './QuestionOption';
 import MyContext from './Context';
 
-const Question = ({ question, options, handleClick, saveAnswer }) => {
+const Question = () => {
   return (
     <MyContext.Consumer>
       {(context) => {

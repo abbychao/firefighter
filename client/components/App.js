@@ -99,6 +99,7 @@ class MyProvider extends Component {
       <MyContext.Provider value={{
         ...this.state,
         handleClick: this.handleClick,
+        saveAnswer: this.saveAnswer,
       }}>
         {this.props.children}
       </MyContext.Provider >
