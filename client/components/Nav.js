@@ -1,11 +1,16 @@
 import React from 'react';
+import MyContext from './Context'
 
-const Nav = ({ position, fireType }) => {
+const Nav = () => {
   return (
-    <section id="nav">
-      <span>Position: <label>{position}</label></span>
-      <span>Fire Type: <label>{fireType}</label></span>
-    </section >
+    <MyContext.Consumer>
+      {(context) => (
+        <section id="nav">
+          <span>Position: <label>{context.position}</label></span>
+          <span>Fire Type: <label>{context.fireType}</label></span>
+        </section >
+      )}
+    </MyContext.Consumer>
   );
 }
 

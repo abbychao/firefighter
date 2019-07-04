@@ -1,30 +1,20 @@
 import React from 'react';
+import MyContext from './Context';
 import Welcome from './Welcome';
 import Question from './Question';
 import Answer from './Answer';
 
-const Body = ({
-  screen, question, options, explanation, lastQuestionCorrect, handleClick, saveAnswer
-}) => {
-
+const Body = () => {
   return (
-    <section id="body">
-      {screen === 'welcome' && <Welcome handleClick={handleClick} />}
-      {screen === 'question' &&
-        < Question
-          question={question}
-          options={options}
-          saveAnswer={saveAnswer}
-          handleClick={handleClick} />
-      }
-      {screen === 'answer' &&
-        <Answer
-          explanation={explanation}
-          lastQuestionCorrect={lastQuestionCorrect}
-          handleClick={handleClick}
-        />
-      }
-    </section>
+    <MyContext.Consumer>
+      {(context) => (
+        <section id="body">
+          {context.screen === 'welcome' && <Welcome />}
+          {context.screen === 'question' && < Question />}
+          {context.screen === 'answer' && <Answer />}
+        </section>
+      )}
+    </MyContext.Consumer>
   );
 };
 
