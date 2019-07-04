@@ -95,7 +95,6 @@ class App extends Component {
 
   render() {
     const { position, screen, lastQuestionCorrect } = this.state;
-    // TODO: fix default
     const { fireType, question, options, explanation } = this.state.questions[this.state.questionIndex];
     return (
       <div>

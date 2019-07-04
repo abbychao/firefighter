@@ -116,7 +116,7 @@ const resetStarterQs = () => {
 
 function refreshDB(questions) {
   Question.deleteMany({}, (err, res) => {
-    console.log('mongoose delete ', err, res);
+    console.log('response from refreshDB: ', err, res);
     // TODO: Use Model.bulkWrite instead of Model.create
     Question.create(questions, (err) => {
       if (err) console.log('mongoose create', err);
