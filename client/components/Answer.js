@@ -1,18 +1,19 @@
 import React from 'react';
 
-const Answer = ({ explanation, lastQuestionCorrect }) => {
+const Answer = ({ explanation, lastQuestionCorrect, handleClick }) => {
   let header;
   let body;
   if (lastQuestionCorrect) {
-    header = <h1>Yes, absolutely right!</h1>;
+    header = 'Yes, absolutely right!';
   } else {
-    header = <h1>Sorry, not quite.</h1>;
+    header = 'Sorry, not quite.';
   }
-  body = <p>Here's why: {explanation}</p>
+  body = `Here's why: ${explanation}`
   return (
     <div>
       <h1>{header}</h1>
       <p>{body}</p>
+      <button onClick={handleClick} name="nextButton">Next question</button>
     </div>
   );
 }

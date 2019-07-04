@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Body from "./Body.js";
 import Nav from "./Nav.js";
-import { isNumber } from 'util';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +10,9 @@ class App extends Component {
       position: null,
       currentAnswer: null,
       lastQuestionCorrect: false,
-      currentQuestion: {},
+      questions: [],
+      // currentQuestion: {},
+      questionIndex: 0,
     };
     this.handleClick = this.handleClick.bind(this);
     this.saveAnswer = this.saveAnswer.bind(this);
@@ -20,16 +21,26 @@ class App extends Component {
   handleClick(e) {
     // handles answer option selection
     // TODO: Refactor to move this to a separate function
-    if (e.target.name === "position") {
-      const position = e.target.name;
+    if (e.target.name === "positionButton") {
+      let positionString;
+      switch (e.target.value) {
+        case 'fe':
+          positionString = 'Forcible Entry';
+          break;
+        default:
+          positionString = 'Can'
+          break;
+      }
+      const position = e.target.value;
       // TODO: Refactor to choose selected position with e.target.value
-      fetch(`/api/questions/position/${position}`)
+      fetch(`/api/questions/${position}`)
         .then((data) => data.json())
         .then((data) => {
           return this.setState({
             ...this.state,
-            position,
-            currentQuestion: data,
+            position: positionString,
+            questions: data,
+            // currentQuestion: data[0],
             screen: 'question',
           })
         })
@@ -37,7 +48,7 @@ class App extends Component {
 
     } else if (e.target.name === "submitAnswer") {
       // score the question
-      if (this.state.currentAnswer === this.state.currentQuestion.answerIndex) {
+      if (this.state.currentAnswer === this.state.questions[this.state.questionIndex].answerIndex) {
         this.setState({
           ...this.state,
           lastQuestionCorrect: true,
@@ -50,11 +61,24 @@ class App extends Component {
           screen: 'answer',
         });
       }
+    } else if (e.target.name === "nextButton") {
+      // TODO: show next question
+      // check if this is the last question
+      if (this.state.questionIndex + 1 < this.state.questions.length) {
+        // if not, move to the next question
+        this.setState({
+          ...this.state,
+          questionIndex: this.state.questionIndex + 1,
+          screen: 'question',
+        });
+      } else {
+        // otherwise, show the end
+        console.log("That was the last question!");
+      }
     }
   }
 
   saveAnswer(index) {
-    console.log('saved answer ', index, this.state.currentAnswer);
     this.setState({
       ...this.state,
       currentAnswer: index,
@@ -63,7 +87,8 @@ class App extends Component {
 
   render() {
     const { position, screen, lastQuestionCorrect } = this.state;
-    const { fireType, question, options, explanation } = this.state.currentQuestion;
+    // TODO: fix default
+    const { fireType, question, options, explanation } = this.state.questions[this.state.questionIndex] || {};
     return (
       <div>
         <Nav position={position} fireType={fireType} />

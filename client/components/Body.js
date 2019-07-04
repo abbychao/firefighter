@@ -15,7 +15,13 @@ const Body = ({ screen, question, options, explanation, lastQuestionCorrect, han
           saveAnswer={saveAnswer}
           handleClick={handleClick} />
       }
-      {screen === 'answer' && <Answer explanation={explanation} lastQuestionCorrect={lastQuestionCorrect} />}
+      {screen === 'answer' &&
+        <Answer
+          explanation={explanation}
+          lastQuestionCorrect={lastQuestionCorrect}
+          handleClick={handleClick}
+        />
+      }
     </section>
   );
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const questionController = require('./questionController.js');
 const resetQs = require('../database/generate-qs.js');
 
@@ -18,7 +18,9 @@ app.get('/api/questions/all', questionController.getAll);
 
 app.get('/api/questions/first', questionController.getFirst);
 
-app.get('/api/questions/:position', questionController.getByPosition);
+app.get('/api/questions/:position', (req, res, next) => {
+  next();
+}, questionController.getByPosition);
 
 
 const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;
