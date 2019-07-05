@@ -38,6 +38,10 @@ button {
 
 #body img {
   width: 95%;
+  max-height: 400px;
   padding: 5px;
   border: solid 2px #EFEFEF;
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto; */
 }
