@@ -50,7 +50,7 @@ const MyProvider = (props) => {
       setLastQuestionCorrect(false)
       setScenarioWon(false);
     };
-    currentAnswer = null;
+    setCurrentAnswer(null);
     setScreen('answer');
   }
   const showFirstQuestion = () => setScreen('question');
