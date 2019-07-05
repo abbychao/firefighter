@@ -11,9 +11,9 @@ const Welcome = () => {
       <p>What is your position?</p>
       <button onClick={context.selectPosition} value="can" >Can</button>
       <button onClick={context.selectPosition} value="fe" >Forcible Entry</button>
-      <button onClick={context.selectPosition} value="ov" >OV</button>
-      <button onClick={context.selectPosition} value="roof" >Roof</button>
-      <button onClick={context.selectPosition} value="lcc" >LCC</button>
+      <button onClick={context.selectPosition} value="ov" disabled >OV</button>
+      <button onClick={context.selectPosition} value="roof" disabled>Roof</button>
+      <button onClick={context.selectPosition} value="lcc" disabled>LCC</button>
     </ >
   )
 };
