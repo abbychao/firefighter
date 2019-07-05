@@ -15,6 +15,10 @@ button {
   margin-right: 5px;
 }
 
+button:focus {
+  outline: none;
+}
+
 #nav {
   background: #9B2915;
   color:khaki;

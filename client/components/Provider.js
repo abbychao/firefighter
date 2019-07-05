@@ -43,6 +43,7 @@ const MyProvider = (props) => {
       .catch(err => console.error(err));
   }
   const submitAnswer = () => {
+    if (currentAnswer === null) return;
     if (currentAnswer === questions[questionIndex].answerIndex) {
       setLastQuestionCorrect(true);
     } else {
