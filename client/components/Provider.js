@@ -29,7 +29,7 @@ const MyProvider = (props) => {
     fetch(`/api/questions/${positionCode}`)
       .then((data) => data.json())
       .then((data) => {
-        setScreen('question');
+        setScreen('scenario');
         setQuestions(data);
       })
       .catch(err => console.error(err));
@@ -40,15 +40,16 @@ const MyProvider = (props) => {
     } else setLastQuestionCorrect(false);
     setScreen('answer');
   }
+  const showFirstQuestion = () => setScreen('question');
   const showNextQuestion = () => {
     if (questionIndex + 1 < questions.length) {
       setQuestionIndex(questionIndex + 1);
       setScreen('question');
-    } else {
+    }
+    else {
       // otherwise, show the end
       console.log("That was the last question!");
     }
-
   }
   const saveAnswer = i => setCurrentAnswer(i);
 
@@ -61,6 +62,7 @@ const MyProvider = (props) => {
       questionIndex,
       selectPosition,
       submitAnswer,
+      showFirstQuestion,
       showNextQuestion,
       saveAnswer
     }}>

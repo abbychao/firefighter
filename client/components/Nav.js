@@ -5,9 +5,9 @@ const Nav = () => {
   const context = useContext(MyContext);
   return (
     <section id="nav">
-      <span>Position: <label>{context.questions[context.questionIndex].position}</label></span>
-      <span>Building: <label>{context.questions[context.questionIndex].buildingType}</label></span>
-      <span>Location: <label>{context.questions[context.questionIndex].fireType}</label></span>
+      <div>Position: <label>{context.questions[context.questionIndex].position}</label></div>
+      <div>Building: <label>{context.questions[context.questionIndex].buildingType}</label></div>
+      <div>Location: <label>{context.questions[context.questionIndex].fireType}</label></div>
     </section >
   );
 }

@@ -1,33 +1,43 @@
 body {
-  background-color: lightblue;
+  background-color: white;
   display: flex;
   justify-content:center;
 }
 
 main {
   width: 600px;
+  height: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 button {  
   width: 90px;
-  margin: 5px;
+  margin-right: 5px;
 }
 
 #nav {
-  background: lightgray;
+  background: #9B2915;
+  color:lightgray;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #body {
-  background-color: lightcyan;
+  background-color: white;
   padding: 20px;
+} 
+
+#nav div {
+  width: 180px;
 }
 
-#nav span {
-  padding-right: 20px;
-}
-
-#nav span label {
+#nav div label {
   font-weight: bold;
 }
 
+#body img {
+  width: 95%;
+  padding: 5px;
+  border: solid 2px #EFEFEF;
+}
