@@ -13,6 +13,7 @@ const Answer = () => {
   body = `Here's why: ${context.questions[context.questionIndex].explanation}`
   return (
     <>
+      <img src={context.questions[context.questionIndex].answerImage} />
       <h1>{header}</h1>
       <p>{body}</p>
       <button onClick={context.showNextQuestion} name="nextButton">Next question</button>

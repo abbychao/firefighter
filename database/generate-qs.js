@@ -16,6 +16,8 @@ const resetStarterQs = () => {
     'Axe, Halligan, FE Saw, Search Rope',
   ];
   q1.answerIndex = 2;
+  q1.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q1.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q1.explanation = 'Here is an explanation of the answer and/or further resources';
   q1.createdAt = Date.now();
   q1.updatedAt = Date.now();
@@ -35,6 +37,8 @@ const resetStarterQs = () => {
     'To adjacent store entrances',
   ];
   q2.answerIndex = 0;
+  q2.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q2.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q2.explanation = 'Here is an explanation of the answer and/or further resources';
   q2.createdAt = Date.now();
   q2.updatedAt = Date.now();
@@ -52,6 +56,8 @@ const resetStarterQs = () => {
     'Open up floors, ceilings, and partitions',
   ];
   q3.answerIndex = 0;
+  q3.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q3.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q3.explanation = 'Force entry\nSearch store\nLocate fire\nControl life hazard\nHelp facilitate line advance\nCheck cellar for fire\nShut down utilities...';
   q3.createdAt = Date.now();
   q3.updatedAt = Date.now();
@@ -70,6 +76,8 @@ const resetStarterQs = () => {
     'Maul, Halligan',
   ];
   q4.answerIndex = 1;
+  q4.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q4.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q4.explanation = 'Here is an explanation of the answer and/or further resources';
   q4.createdAt = Date.now();
   q4.updatedAt = Date.now();
@@ -89,6 +97,8 @@ const resetStarterQs = () => {
     'To aerial ladder or tower ladder',
   ];
   q5.answerIndex = 3;
+  q5.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q5.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q5.explanation = 'Here is an explanation of the answer and/or further resources';
   q5.createdAt = Date.now();
   q5.updatedAt = Date.now();
@@ -106,6 +116,8 @@ const resetStarterQs = () => {
     'Assist with forcible entry',
   ];
   q6.answerIndex = 2;
+  q6.questionImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
+  q6.answerImage = 'https://upload.wikimedia.org/wikipedia/commons/3/36/Large_bonfire.jpg';
   q6.explanation = 'Assist with forcible entry\nSearch store\nProbe ceiling with hook for fire or construction...';
   q6.createdAt = Date.now();
   q6.updatedAt = Date.now();
@@ -116,7 +128,7 @@ const resetStarterQs = () => {
 
 function refreshDB(questions) {
   Question.deleteMany({}, (err, res) => {
-    console.log('response from refreshDB: ', err, res);
+    console.log('refreshed database: ', err ? err : res);
     // TODO: Use Model.bulkWrite instead of Model.create
     Question.create(questions, (err) => {
       if (err) console.log('mongoose create', err);

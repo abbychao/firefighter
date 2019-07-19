@@ -4,22 +4,24 @@ import MyContext from './Context';
 
 const Question = () => {
   const context = useContext(MyContext);
-  const contents = [];
+  const questionOptions = [];
   let index = 0;
   context.questions[context.questionIndex].options.map((option) => {
-    contents.push(<QuestionOption text={option} index={index} />);
-    contents.push(<br />);
+    questionOptions.push(<QuestionOption text={option} index={index} />);
+    questionOptions.push(<br />);
     index += 1;
   });
   return (
-    <form>
+    <>
+      <img src={context.questions[context.questionIndex].questionImage} />
+      <br />
       {context.questions[context.questionIndex].question}
       <br />
       <br />
-      {contents}
+      {questionOptions}
       <br />
       <button name="submitAnswer" type="button" onClick={context.submitAnswer}>Submit</button>
-    </form >
+    </ >
   );
 }
 
