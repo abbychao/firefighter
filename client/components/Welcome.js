@@ -5,7 +5,7 @@ const Welcome = () => {
   const context = useContext(MyContext);
   return (
     <>
-      <img src="../../assets/fdny-study.jpg" alt="FDNY badge in classroom" />
+      <img src="../../public/fdny-study.jpg" alt="FDNY badge in classroom" />
       <h1>Welcome!</h1>
       <p>Get ready to ace the Lieutenant's exam! This simulation will help you prepare.</p>
       <p>What is your position?</p>

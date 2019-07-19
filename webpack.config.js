@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
   mode: process.env.NODE_ENV,
@@ -41,9 +41,11 @@ module.exports = {
     ],
   },
   devServer: {
-    publicPath: '/build/',
+    publicPath: '/public/',
+    // contentBase: path.join(__dirname, 'public'),
     proxy: {
       '/api': 'http://localhost:3000',
+      // '/public': 'http://localhost:3000/public',
     },
     hot: true,
   },
