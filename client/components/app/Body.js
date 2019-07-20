@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 import Welcome from './Welcome';
 import ScenarioStart from './ScenarioStart';
 import Question from './Question';
@@ -7,7 +7,7 @@ import Answer from './Answer';
 import ScenarioEnd from './ScenarioEnd';
 
 const Body = () => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   return (
     <section id="body">
       {context.screen === 'welcome' && <Welcome />}

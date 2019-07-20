@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 
 const QuestionOption = ({ text, index }) => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   return (
     <label>
       <input type="radio" name="option" onClick={() => context.saveAnswer(index)} /> {text}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 
-const MyProvider = (props) => {
+const AppProvider = (props) => {
   const initialQuestionArray = [
     {
       id: 0,
@@ -29,7 +29,7 @@ const MyProvider = (props) => {
     setCurrentAnswer(null);
     setLastQuestionCorrect(false);
     setScenarioWon(true);
-    setQuestion(initialQuestionArray)
+    setQuestions(initialQuestionArray)
     setQuestionIndex(0);
   }
   const selectPosition = (e) => {
@@ -67,7 +67,7 @@ const MyProvider = (props) => {
   const saveAnswer = i => setCurrentAnswer(i);
 
   return (
-    <MyContext.Provider value={{
+    <AppContext.Provider value={{
       screen,
       currentAnswer,
       lastQuestionCorrect,
@@ -82,8 +82,8 @@ const MyProvider = (props) => {
       saveAnswer
     }}>
       {props.children}
-    </MyContext.Provider >
+    </AppContext.Provider >
   )
 }
 
-export default MyProvider;
+export default AppProvider;

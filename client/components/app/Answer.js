@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 
 const Answer = () => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   let header;
   let body;
   if (context.lastQuestionCorrect) {

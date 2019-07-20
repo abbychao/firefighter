@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import QuestionOption from './QuestionOption';
-import MyContext from './Context';
+import AppContext from './Context';
 
 const Question = () => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   const questionOptions = [];
   let index = 0;
   context.questions[context.questionIndex].options.map((option) => {
-    questionOptions.push(<QuestionOption text={option} index={index} />);
+    questionOptions.push(<QuestionOption text={option} index={index} key={`question-${index}`} />);
     questionOptions.push(<br />);
     index += 1;
   });

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 
 const Welcome = () => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   return (
     <>
       <img src="../../public/images/fdny-study.jpg" alt="FDNY badge in classroom" />

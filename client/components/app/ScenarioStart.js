@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import MyContext from './Context';
+import AppContext from './Context';
 
 const ScenarioStart = () => {
-  const context = useContext(MyContext);
+  const context = useContext(AppContext);
   return (
     <>
-      <img src="../../public/taxpayer-store-fire.jpg" alt="taxpayer store fire" />
+      <img src="../../public/images/taxpayer-store-fire.jpg" alt="taxpayer store fire" />
       <p>You've been called to a <b>Store Fire</b> at a <b>Taxpayer</b> building.</p>
       <button onClick={context.showFirstQuestion} >Let's go!</button>
     </ >
