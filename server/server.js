@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-  // res.status(200).sendFile();
+  res.status(200).send('hello');
 });
 
 app.get('/api/questions/all', questionController.getAll);

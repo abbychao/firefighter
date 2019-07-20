@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AppContext from './Context';
 
 const AppProvider = (props) => {
+  const { setView } = props;
   const initialQuestionArray = [
     {
       id: 0,
@@ -16,7 +17,6 @@ const AppProvider = (props) => {
       updatedAt: Date.now()
     }
   ]
-
   const [screen, setScreen] = useState('welcome');
   const [currentAnswer, setCurrentAnswer] = useState(null);
   const [lastQuestionCorrect, setLastQuestionCorrect] = useState(false);
@@ -68,6 +68,7 @@ const AppProvider = (props) => {
 
   return (
     <AppContext.Provider value={{
+      setView,
       screen,
       currentAnswer,
       lastQuestionCorrect,
