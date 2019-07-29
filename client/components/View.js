@@ -15,10 +15,10 @@ const View = () => {
           <App />
         </AppProvider>
       }
-      {view === 'admin' &&
+      {/* {view === 'admin' &&
         <AdminProvider setView={setView}>
           <Admin />
-        </AdminProvider>}
+        </AdminProvider>} */}
     </>
   );
 }
