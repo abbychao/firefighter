@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const dbPassword = require('./credentials');
 
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/mongo', { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://admin:${dbPassword}@cluster0-53vfg.mongodb.net/production`, { useNewUrlParser: true });
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB');
 });
