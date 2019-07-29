@@ -24,5 +24,5 @@ app.get('/api/questions/first', questionController.getFirst);
 app.get('/api/questions/:positionCode', questionController.getByPosition);
 
 // If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server
-const port = process.env.PORT || process.env.NODE_ENV === 'production' ? 3000 : 8080;
-app.listen(port, () => console.log(`listening on port ${port}`));
+const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;
+app.listen(process.env.PORT || 3000, '0.0.0.0', () => console.log(`listening on port ${port}`));
