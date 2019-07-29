@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 const List = () => {
   const [displayQs, setDisplayQs] = useState([]);
-  const getQs = () => {
-    fetch('/api/questions/all')
+  const getQs = (position) => {
+    fetch(position === undefined ? `/api/questions/${position}` : '/api/questions/all')
       .then(data => data.json())
       // .then(data => console.log(data))
       .then((questions) => {
@@ -13,10 +13,11 @@ const List = () => {
         const questionsArr = [];
         questions.forEach((q) => {
           questionsArr.push(
-            <li>
-              <span>{q.buildingType}</span>
-              <span>{q.position}</span>
-              <span>{q.question}</span>
+            // TODO: On click, this should open the question in the body
+            <li name="list item" onClick={(e) => console.log(e.target.value)}>
+              {q.buildingType}
+              {q.position}
+              {q.question}
             </li>
           );
         });
@@ -26,6 +27,7 @@ const List = () => {
   }
 
   return <>
+    <input type='text' placeholder="Position"></input>
     <button onClick={getQs}>Load</button>
     {displayQs}
   </>;
