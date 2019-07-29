@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbPassword = require('./credentials');
+const dbPassword = 'XsOrxN28qWBvEFGK'; // TODO: Move credentials
 
 const Schema = mongoose.Schema;
 mongoose.connect(`mongodb+srv://admin:${dbPassword}@cluster0-53vfg.mongodb.net/production`, { useNewUrlParser: true });
