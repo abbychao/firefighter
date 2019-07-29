@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// const bodyParser = require('body-parser');
 const questionController = require('./questionController.js');
 // const resetQs = require('../database/generate-qs.js');
 // resetQs();
@@ -24,5 +23,6 @@ app.get('/api/questions/first', questionController.getFirst);
 
 app.get('/api/questions/:positionCode', questionController.getByPosition);
 
-const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;
-app.listen(3000, () => console.log(`listening on port ${port}`));
+// If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server
+const port = process.env.PORT || process.env.NODE_ENV === 'production' ? 3000 : 8080;
+app.listen(port, () => console.log(`listening on port ${port}`));
