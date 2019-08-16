@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dbPassword = 'XsOrxN28qWBvEFGK'; // TODO: Move credentials
 
 const Schema = mongoose.Schema;
-mongoose.connect(`mongodb+srv://admin:${dbPassword}@cluster0-53vfg.mongodb.net/production`, { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://admin:${dbPassword}@cluster0-53vfg.mongodb.net/production`, { useCreateIndex: true, useNewUrlParser: true });
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB');
 });
