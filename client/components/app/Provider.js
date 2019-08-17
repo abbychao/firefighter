@@ -59,10 +59,7 @@ const AppProvider = (props) => {
       setQuestionIndex(questionIndex + 1);
       setScreen('question');
     }
-    else {
-      // otherwise, show the end
-      setScreen('end');
-    }
+    else setScreen('end');
   }
   const saveAnswer = i => setCurrentAnswer(i);
 
