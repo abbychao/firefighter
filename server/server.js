@@ -21,7 +21,9 @@ app.get('/api/questions/all', questionController.getAll);
 
 app.get('/api/questions/first', questionController.getFirst);
 
-app.get('/api/questions/:positionCode', questionController.getByPosition);
+app.get('/api/questions/position/:positionCode', questionController.getByPosition);
+
+app.get('/api/questions/id/:id', questionController.getById);
 
 // If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server
 const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;

@@ -16,6 +16,14 @@ questionController.getFirst = (req, res) => {
   });
 };
 
+questionController.getById = (req, res) => {
+  const { id } = req.params;
+  Question.find({ id }, (err, docs) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(docs);
+  });
+};
+
 questionController.getByPosition = (req, res) => {
   let position;
   switch (req.params.positionCode) {
