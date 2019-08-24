@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
-const dbPassword = 'XsOrxN28qWBvEFGK'; // TODO: Move credentials
 
-const Schema = mongoose.Schema;
-mongoose.connect(`mongodb+srv://admin:${dbPassword}@cluster0-53vfg.mongodb.net/production`, { useCreateIndex: true, useNewUrlParser: true });
+const { Schema } = mongoose;
+const uri = process.env.NODE_ENV === 'production'
+  ? `mongodb+srv://admin:${process.env.DB_PASS}@cluster0-53vfg.mongodb.net/production`
+  : 'mongodb://localhost/mongo';
+
+mongoose.connect(uri, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+});
+
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB');
 });
