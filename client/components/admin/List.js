@@ -2,11 +2,20 @@ import React, { useContext, useEffect } from 'react';
 import AdminContext from './Context';
 
 const List = () => {
+
+  const context = useContext(AdminContext);
+  const {
+    displayQs,
+    setDisplayQs,
+    setCurrentQ,
+    setShowForm,
+  } = context;
+
   function getQs(position) {
     fetch(position === 'undefined' ? `/api/questions/position/${position}` : '/api/questions/all')
       .then(data => data.json())
       .then((questions) => {
-        const questionsArr = []
+        const questionsArr = [];
         questions.forEach((q) => {
           // TODO: On click, this should open the question in the body
           questionsArr.push(
@@ -17,7 +26,7 @@ const List = () => {
             </li>
           );
         });
-        context.setDisplayQs(questionsArr);
+        setDisplayQs(questionsArr);
       })
       .catch(err => console.log(err));
   }
@@ -30,15 +39,16 @@ const List = () => {
     const name = e.target.getAttribute('name');
     const id = name.slice(1, name.length);
     getQById(id)
-      .then((result) => context.setCurrentQ(result[0]));
+      .then((result) => {
+        setCurrentQ(result[0]);
+        setShowForm(true);
+      });
   }
   function handleNewClick(e) {
     // TODO: if a question is currently open with unsaved changes, prompt to save
     // if not, then populate the body with blank form
   }
 
-  const context = useContext(AdminContext);
-  const { displayQs } = context;
 
   useEffect(getQs, []);
 

@@ -4,6 +4,7 @@ import AdminContext from './Context';
 const AdminProvider = ({ setView, children }) => {
   const [displayQs, setDisplayQs] = useState([]);
   const [currentQ, setCurrentQ] = useState({});
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <AdminContext.Provider value={{
@@ -12,6 +13,8 @@ const AdminProvider = ({ setView, children }) => {
       setDisplayQs,
       currentQ,
       setCurrentQ,
+      showForm,
+      setShowForm,
     }}
     >
       {children}

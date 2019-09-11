@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Nav from './Nav';
 import List from './List';
-import Body from './Body';
+import Form from './Form';
+import AdminContext from './Context';
 
 const Admin = () => {
+  const context = useContext(AdminContext);
+  const { showForm, currentQ } = context;
   return (
     <>
       <Nav />
       <List />
-      <Body />
+      {showForm && <Form currentQ={currentQ} />}
     </>
   );
 }
