@@ -19,100 +19,55 @@ const Form = () => {
   function handleSave() {
     // TODO: Grab all information from the form and submit to DB
   }
-  function handleChange(e) {
-    // TODO: How to handle different fields?
-    // Possibly get from "name" field and then save in local state
-  }
-  function getFieldType(key) {
-    if (
-      key === '_id'
-      || key === '__v'
-      || key === 'id'
-      || key === 'createdAt'
-      || key === 'updatedAt'
-      || key === 'answerIndex'
-    ) return 'hidden';
-    if (
-      key === 'options'
-    ) return 'options';
-    if (
-      key === 'explanation'
-    ) return 'textarea';
-    return 'text';
-  }
-  function renderField(currentQ, key) {
-    const fieldType = getFieldType(key);
-    console.log('key', key, 'fieldType', fieldType);
-    switch (fieldType) {
-      case 'hidden':
-        return null;
-      case 'textarea':
-        return (
-          <React.Fragment key={`entry${key}`}>
-            <label>{key}</label>
-            <textarea value={currentQ[key]} onChange={handleChange} />
-            <br />
-          </React.Fragment>
-        );
-      default:
-        return (
-          <React.Fragment key={`entry${key}`}>
-            <label>{key}</label>
-            <input value={currentQ[key]} onChange={handleChange} />
-            <br />
-          </React.Fragment>
-        );
-    }
-  }
 
   const context = useContext(AdminContext);
-  // const [question, setQuestion] = useState(JSON.parse(JSON.stringify(context.currentQ)));
   const { currentQ } = context;
-  console.log(currentQ);
 
-  // Other fields: createdAt, updatedAt, id, _id, __v
-  const {
-    position,
-    buildingType,
-    fireType,
-    question,
-    options,
-    answerIndex,
-    questionImage,
-    answerImage,
-    explanation,
-  } = currentQ;
-
-
-  const contents = [];
-  const keys = Object.keys(currentQ);
-  keys.forEach((key) => {
-    contents.push(renderField(currentQ, key));
-  });
+  // Other fields (ignored): createdAt, updatedAt, id, _id, __v
+  const [position, setPosition] = useState(currentQ.position);
+  const [buildingType, setBuildingType] = useState(currentQ.buildingType);
+  const [fireType, setFireType] = useState(currentQ.fireType);
+  const [question, setQuestion] = useState(currentQ.question);
+  const [options, setOptions] = useState(currentQ.options);
+  const [answerIndex, setAnswerIndex] = useState(currentQ.answerIndex);
+  const [questionImage, setQuestionImage] = useState(currentQ.questionImage);
+  const [answerImage, setAnswerImage] = useState(currentQ.answerImage);
+  const [explanation, setExplanation] = useState(currentQ.explanation);
 
 
   const optionsHTML = [];
+  const handleOptionUpdate = (e, idx) => {
+    const optionsCopy = options.slice();
+    optionsCopy[idx] = e.target.value;
+    setOptions(optionsCopy);
+  }
   options.forEach((item, idx) => {
-    optionsHTML.push(<input value={item} key={`option${idx}`} />);
+    optionsHTML.push(
+      <li key={`option${idx}`}>
+        <input value={item} onChange={(e) => handleOptionUpdate(e, idx)}} />
+        {answerIndex === idx && <button type="button" disabled>ANSWER</button>}
+        {answerIndex !== idx && <button type="button" onClick={() => setAnswerIndex(idx)}>Select</button>}
+      </li>
+    );
   });
 
   return (
     <StyledForm>
       <label>
         Position:
-        <input value={position} />
+        <input value={position} onChange={(e) => setPosition(e.target.value)} />
       </label>
       <label>
         Building Type:
-        <input value={buildingType} />
+        <input value={buildingType} onChange={(e) => setBuildingType(e.target.value)} />
       </label>
       <label>
         Fire Type:
-        <input value={fireType} />
+        <input value={fireType} onChange={(e) => setFireType(e.target.value)} />
       </label>
       <label>
         Question:
-        <input value={question} />
+        <input value={question} onChange={(e) => setQuestion(e.target.value)} />
       </label>
       <label>
         Options:
@@ -120,7 +75,7 @@ const Form = () => {
       </label>
       <label>
         Question Image URL:
-        <input value={questionImage} />
+        <input value={questionImage} onChange={(e) => setQuestionImage(e.target.value)} />
       </label>
       <label>
         Question Image Preview:
@@ -128,7 +83,7 @@ const Form = () => {
       </label>
       <label>
         Explanation Image
-        <input value={answerImage} />
+        <input value={answerImage} onChange={(e) => setAnswerImage(e.target.value)} />
       </label>
       <label>
         Explanation Image Preview:
@@ -136,7 +91,7 @@ const Form = () => {
       </label>
       <label>
         Explanation
-        <textarea value={explanation} />
+        <textarea value={explanation} onChange={(e) => setExplanation(e.target.value)} />
       </label>
 
       <input type="button" value="Save" onClick={handleSave} />
