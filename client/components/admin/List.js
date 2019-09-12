@@ -40,6 +40,7 @@ const List = () => {
     const id = name.slice(1, name.length);
     getQById(id)
       .then((result) => {
+        setShowForm(false);
         setCurrentQ(result[0]);
         setShowForm(true);
       });
