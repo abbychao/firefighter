@@ -16,10 +16,6 @@ const StyledForm = styled.div`
 `;
 
 const Form = () => {
-  function handleSave() {
-    // TODO: Grab all information from the form and submit to DB
-  }
-
   const context = useContext(AdminContext);
   const { currentQ } = context;
 
@@ -34,13 +30,36 @@ const Form = () => {
   const [answerImage, setAnswerImage] = useState(currentQ.answerImage);
   const [explanation, setExplanation] = useState(currentQ.explanation);
 
-
-  const optionsHTML = [];
-  const handleOptionUpdate = (e, idx) => {
+  function handleSave() {
+    const fetchOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        position,
+        buildingType,
+        fireType,
+        question,
+        options,
+        answerIndex,
+        questionImage,
+        answerImage,
+        explanation,
+      }),
+    };
+    fetch(`/api/questions/id/${currentQ.id}`, fetchOptions)
+      .then(res => {
+        context.setShowForm(false);
+        alert('Saved!');
+      })
+      .catch((err) => console.error(err));
+  }
+  function handleOptionUpdate(e, idx) {
     const optionsCopy = options.slice();
     optionsCopy[idx] = e.target.value;
     setOptions(optionsCopy);
   }
+
+  const optionsHTML = [];
   options.forEach((item, idx) => {
     optionsHTML.push(
       <li key={`option${idx}`}>

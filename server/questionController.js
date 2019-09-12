@@ -45,7 +45,6 @@ questionController.getByPosition = (req, res) => {
 
 questionController.updateById = (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const {
     position,
     buildingType,
@@ -68,9 +67,9 @@ questionController.updateById = (req, res) => {
     answerImage,
     explanation,
   };
-  Question.updateOne({ id }, data, (err, res) => {
+  Question.updateOne({ id }, data, (err, response) => {
     if (err) return res.status(500).end(err);
-    return res.status(200).send(res);
+    return res.status(200).send(response);
   });
 };
 

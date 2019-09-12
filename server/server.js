@@ -7,16 +7,13 @@ const questionController = require('./questionController.js');
 // resetQs();
 
 const app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/public', express.static('public', { index: false }));
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
-
-// app.get('/admin', (req, res) => {
-//   res.status(200).send('hello');
-// });
 
 app.get('/api/questions/all', questionController.getAll);
 app.get('/api/questions/first', questionController.getFirst);
