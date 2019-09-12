@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import AdminContext from './Context';
 
 const List = () => {
-
   const context = useContext(AdminContext);
   const {
     displayQs,
@@ -28,7 +27,7 @@ const List = () => {
         });
         setDisplayQs(questionsArr);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }
   function getQById(id) {
     return fetch(`/api/questions/id/${id}`)
