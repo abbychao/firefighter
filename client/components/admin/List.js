@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from 'react';
+// regeneratorRuntime allows us to use async/await in handleNewClick function
+import regeneratorRuntime from "regenerator-runtime";
 import AdminContext from './Context';
 
 const List = () => {
@@ -7,6 +9,7 @@ const List = () => {
     displayQs,
     setDisplayQs,
     setCurrentQ,
+    showForm,
     setShowForm,
   } = context;
 
@@ -16,9 +19,8 @@ const List = () => {
       .then((questions) => {
         const questionsArr = [];
         questions.forEach((q) => {
-          // TODO: On click, this should open the question in the body
           questionsArr.push(
-            <li name={`q${q.id}`} key={`q${q.id}`} onClick={handleQuestionClick}>
+            <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
               {q.buildingType}
               {q.position}
               {q.question}
@@ -44,11 +46,29 @@ const List = () => {
         setShowForm(true);
       });
   }
-  function handleNewClick(e) {
+  async function handleNewClick() {
     // TODO: if a question is currently open with unsaved changes, prompt to save
+    // TODO: Switching between questions should also test for unsaved changes
+    if (showForm) {
+      const readyForNewForm = confirm('Do you wish to abandon changes?');
+      if (!readyForNewForm) return;
+    }
+    const newQ = {
+      position: '',
+      buildingType: '',
+      fireType: '',
+      question: '',
+      options: [],
+      answerIndex: '',
+      questionImage: '',
+      answerImage: '',
+      explanation: '',
+    };
+    setShowForm(false);
+    await setCurrentQ(newQ);
+    await setShowForm(true);
     // if not, then populate the body with blank form
   }
-
 
   useEffect(getQs, []);
 

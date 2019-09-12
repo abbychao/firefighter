@@ -16,10 +16,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/questions/all', questionController.getAll);
-app.get('/api/questions/first', questionController.getFirst);
+// app.get('/api/questions/first', questionController.getFirst);
 app.get('/api/questions/position/:positionCode', questionController.getByPosition);
+app.post('/api/questions', questionController.create);
 app.get('/api/questions/id/:id', questionController.getById);
 app.put('/api/questions/id/:id', questionController.updateById);
+app.delete('/api/questions/id/:id', questionController.deleteById);
 
 // If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server
 const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;

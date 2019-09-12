@@ -9,16 +9,16 @@ questionController.getAll = (req, res) => {
   });
 };
 
-questionController.getFirst = (req, res) => {
-  Question.findOne({ id: 1 }, (err, doc) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(JSON.stringify(doc));
-  });
-};
+// questionController.getFirst = (req, res) => {
+//   Question.findOne({ id: 1 }, (err, doc) => {
+//     if (err) return res.status(500).end(err);
+//     return res.status(200).send(JSON.stringify(doc));
+//   });
+// };
 
 questionController.getById = (req, res) => {
   const { id } = req.params;
-  Question.find({ id }, (err, docs) => {
+  Question.find({ _id: id }, (err, docs) => {
     if (err) return res.status(500).end(err);
     return res.status(200).send(docs);
   });
@@ -67,7 +67,43 @@ questionController.updateById = (req, res) => {
     answerImage,
     explanation,
   };
-  Question.updateOne({ id }, data, (err, response) => {
+  Question.updateOne({ _id: id }, data, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(response);
+  });
+};
+
+questionController.create = (req, res) => {
+  const {
+    position,
+    buildingType,
+    fireType,
+    question,
+    options,
+    answerIndex,
+    questionImage,
+    answerImage,
+    explanation,
+  } = req.body;
+  const data = {
+    position,
+    buildingType,
+    fireType,
+    question,
+    options,
+    answerIndex,
+    questionImage,
+    answerImage,
+    explanation,
+  };
+  Question.create(data, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send();
+  });
+};
+
+questionController.deleteById = (req, res) => {
+  Question.deleteOne({ _id: req.params.id }, (err, response) => {
     if (err) return res.status(500).end(err);
     return res.status(200).send(response);
   });

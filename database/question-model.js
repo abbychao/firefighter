@@ -15,7 +15,7 @@ mongoose.connection.once('open', () => {
 });
 
 const questionSchema = new Schema({
-  id: { type: Number, unique: true, required: true },
+  // id: { type: Number, unique: true, required: true },
   position: { type: String, required: true },
   buildingType: { type: String, required: true },
   fireType: { type: String, required: true },

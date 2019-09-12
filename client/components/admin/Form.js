@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
@@ -8,7 +9,7 @@ const StyledForm = styled.div`
     display: block;
   }
   img {
-    width: 100%;
+    width: 30%;
   }
   textarea {
     width: 100%;
@@ -17,9 +18,9 @@ const StyledForm = styled.div`
 
 const Form = () => {
   const context = useContext(AdminContext);
-  const { currentQ } = context;
+  const { currentQ, setShowForm, displayQs, setDisplayQs, getQs } = context;
 
-  // Other fields (ignored): createdAt, updatedAt, id, _id, __v
+  // Other fields (ignored): createdAt, updatedAt, _id, __v
   const [position, setPosition] = useState(currentQ.position);
   const [buildingType, setBuildingType] = useState(currentQ.buildingType);
   const [fireType, setFireType] = useState(currentQ.fireType);
@@ -46,16 +47,70 @@ const Form = () => {
         explanation,
       }),
     };
-    fetch(`/api/questions/id/${currentQ.id}`, fetchOptions)
+    fetch(`/api/questions/id/${currentQ._id}`, fetchOptions)
       .then(res => {
         context.setShowForm(false);
         alert('Saved!');
       })
       .catch((err) => console.error(err));
   }
+  function handleDelete() {
+    const readyToDelete = confirm('Are you sure you want to delete this question?');
+    if (!readyToDelete) return;
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        position,
+        buildingType,
+        fireType,
+        question,
+        options,
+        answerIndex,
+        questionImage,
+        answerImage,
+        explanation,
+      }),
+    };
+    fetch(`/api/questions/id/${currentQ._id}`, fetchOptions)
+      .then(res => {
+        setShowForm(false);
+        alert('Deleted!');
+        getQs();
+      })
+      .catch((err) => console.error(err));
+  }
+  function handleCreate() {
+    const fetchOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        position,
+        buildingType,
+        fireType,
+        question,
+        options,
+        answerIndex,
+        questionImage,
+        answerImage,
+        explanation,
+      }),
+    };
+    fetch('/api/questions', fetchOptions)
+      .then(res => {
+        setShowForm(false);
+        alert('Created!');
+      })
+      .catch((err) => console.error(err));
+  }
   function handleOptionUpdate(e, idx) {
     const optionsCopy = options.slice();
     optionsCopy[idx] = e.target.value;
+    setOptions(optionsCopy);
+  }
+  function handleNewOptionUpdate(e, newId) {
+    const optionsCopy = options.slice();
+    optionsCopy.push(e.target.value);
     setOptions(optionsCopy);
   }
 
@@ -69,6 +124,14 @@ const Form = () => {
       </li>
     );
   });
+  const newId = options.length;
+  optionsHTML.push(
+    <li key={`option${newId}`}>
+      <input placeholder="New option..." onChange={(e) => handleNewOptionUpdate(e, newId)} />
+      <button type="button" onClick={() => setAnswerIndex(newId)}>Select</button>
+    </li>
+  );
+
 
   return (
     <StyledForm>
@@ -96,24 +159,20 @@ const Form = () => {
         Question Image URL:
         <input value={questionImage} onChange={(e) => setQuestionImage(e.target.value)} />
       </label>
-      <label>
-        Question Image Preview:
-        <img src={questionImage} alt="question" />
-      </label>
+      <img src={questionImage} alt="question preview" />
       <label>
         Explanation Image
         <input value={answerImage} onChange={(e) => setAnswerImage(e.target.value)} />
       </label>
-      <label>
-        Explanation Image Preview:
-        <img src={answerImage} alt="answer" />
-      </label>
+      <img src={answerImage} alt="answer preview" />
       <label>
         Explanation
         <textarea value={explanation} onChange={(e) => setExplanation(e.target.value)} />
       </label>
 
-      <input type="button" value="Save" onClick={handleSave} />
+      {currentQ._id && <input type="button" value="Save" onClick={handleSave} />}
+      {currentQ._id && <input type="button" value="Delete" onClick={handleDelete} />}
+      {!currentQ._id && <input type="button" value="Create" onClick={handleCreate} />}
     </StyledForm>
   );
 };
