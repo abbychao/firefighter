@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useState } from 'react';
-import AdminContext from './Context';
 import styled from 'styled-components';
+import AdminContext from './Context';
 
 const StyledForm = styled.div`
   label {
@@ -44,7 +44,7 @@ const Form = () => {
   options.forEach((item, idx) => {
     optionsHTML.push(
       <li key={`option${idx}`}>
-        <input value={item} onChange={(e) => handleOptionUpdate(e, idx)}} />
+        <input value={item} onChange={(e) => handleOptionUpdate(e, idx)} />
         {answerIndex === idx && <button type="button" disabled>ANSWER</button>}
         {answerIndex !== idx && <button type="button" onClick={() => setAnswerIndex(idx)}>Select</button>}
       </li>
