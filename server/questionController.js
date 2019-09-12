@@ -43,4 +43,35 @@ questionController.getByPosition = (req, res) => {
   });
 };
 
+questionController.updateById = (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  const {
+    position,
+    buildingType,
+    fireType,
+    question,
+    options,
+    answerIndex,
+    questionImage,
+    answerImage,
+    explanation,
+  } = req.body;
+  const data = {
+    position,
+    buildingType,
+    fireType,
+    question,
+    options,
+    answerIndex,
+    questionImage,
+    answerImage,
+    explanation,
+  };
+  Question.updateOne({ id }, data, (err, res) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(res);
+  });
+};
+
 module.exports = questionController;
