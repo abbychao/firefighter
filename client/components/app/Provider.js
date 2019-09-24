@@ -34,7 +34,7 @@ const AppProvider = (props) => {
   }
   const selectPosition = (e) => {
     const positionCode = e.target.value;
-    fetch(`/api/questions/${positionCode}`)
+    fetch(`/api/questions/position/${positionCode}`)
       .then((data) => data.json())
       .then((data) => {
         setScreen('start');

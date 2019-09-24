@@ -9,6 +9,9 @@ const StyledAdmin = styled.div`
   width: 1000px;
   #body {
     display: flex;
+    #list {
+      max-width: 400px;
+    }
   }
 `;
 
