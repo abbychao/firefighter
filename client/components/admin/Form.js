@@ -9,7 +9,7 @@ const StyledForm = styled.div`
     display: block;
   }
   img {
-    width: 30%;
+    max-width: 300px;
   }
   textarea {
     width: 100%;
@@ -134,7 +134,7 @@ const Form = () => {
 
 
   return (
-    <StyledForm>
+    <StyledForm id="form">
       <label>
         Position:
         <input value={position} onChange={(e) => setPosition(e.target.value)} />

@@ -73,12 +73,12 @@ const List = () => {
   useEffect(getQs, []);
 
   return (
-    <>
+    <div id="list">
       <input type="text" placeholder="Position" />
       <input type="button" onClick={getQs} value="Search" />
       <input type="button" onClick={handleNewClick} value="New" />
       {displayQs}
-    </>
+    </div>
   );
 };
 

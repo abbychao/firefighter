@@ -7,6 +7,9 @@ import AdminContext from './Context';
 
 const StyledAdmin = styled.div`
   width: 1000px;
+  #body {
+    display: flex;
+  }
 `;
 
 const Admin = () => {
@@ -16,8 +19,10 @@ const Admin = () => {
   return (
     <StyledAdmin>
       <Nav />
-      <List />
-      {showForm && <Form currentQ={currentQ} />}
+      <div id="body">
+        <List />
+        {showForm && <Form currentQ={currentQ} />}
+      </div>
     </StyledAdmin>
   );
 }
