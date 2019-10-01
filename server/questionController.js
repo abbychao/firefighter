@@ -9,13 +9,6 @@ questionController.getAll = (req, res) => {
   });
 };
 
-// questionController.getFirst = (req, res) => {
-//   Question.findOne({ id: 1 }, (err, doc) => {
-//     if (err) return res.status(500).end(err);
-//     return res.status(200).send(JSON.stringify(doc));
-//   });
-// };
-
 questionController.getById = (req, res) => {
   const { id } = req.params;
   Question.find({ _id: id }, (err, docs) => {
@@ -25,21 +18,21 @@ questionController.getById = (req, res) => {
 };
 
 questionController.getByPosition = (req, res) => {
-  let position;
-  switch (req.params.positionCode) {
-    case 'fe':
-      position = 'Forcible Entry';
-      break;
-    case 'can':
-      position = 'Can';
-      break;
-    default:
-      position = 'Can';
-      break;
-  }
+  const { position } = req.params;
   Question.find({ position }, (err, docs) => {
     if (err) return res.status(500).end(err);
     return res.status(200).send(docs);
+  });
+};
+
+questionController.getAllPositions = (req, res) => {
+  Question.find({}, (err, docs) => {
+    if (err) return res.status(500).end(err);
+    const positions = new Set();
+    docs.forEach((question) => {
+      positions.add(question.position);
+    });
+    return res.status(200).send(Array.from(positions));
   });
 };
 
