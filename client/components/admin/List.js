@@ -21,9 +21,7 @@ const List = () => {
         questions.forEach((q) => {
           questionsArr.push(
             <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
-              {q.buildingType}
-              {q.position}
-              {q.question}
+              {q.position} {q.buildingType} {q.question}
             </li>
           );
         });
