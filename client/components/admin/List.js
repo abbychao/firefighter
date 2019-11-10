@@ -11,10 +11,12 @@ const List = () => {
     setCurrentQ,
     showForm,
     setShowForm,
+    positions,
+    getPositions,
   } = context;
 
   function getQs(position) {
-    fetch(position === 'undefined' ? `/api/questions/position/${position}` : '/api/questions/all')
+    fetch(position === undefined ? '/api/questions/all' : `/api/questions/position/${position}`)
       .then(data => data.json())
       .then((questions) => {
         const questionsArr = [];
@@ -69,12 +71,17 @@ const List = () => {
   }
 
   useEffect(getQs, []);
+  useEffect(getPositions, []);
+
+  const positionsArray = positions.map((position) => <option value={position} key={position}>{position}</option>);
 
   return (
     <div id="list">
-      <input type="text" placeholder="Position" />
-      <input type="button" onClick={getQs} value="Search" />
-      <input type="button" onClick={handleNewClick} value="New" />
+      <select onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }}>
+        <option value="all"> All Positions</option>
+        {positionsArray}
+      </select>
+      <input type="button" onClick={handleNewClick} value="New Question" />
       {displayQs}
     </div>
   );

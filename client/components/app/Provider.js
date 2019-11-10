@@ -23,9 +23,10 @@ const AppProvider = (props) => {
   const [scenarioWon, setScenarioWon] = useState(true);
   const [questions, setQuestions] = useState(initialQuestionArray);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [positions, setPositions] = useState([]);
+  const [positions, setPositions] = useState([]); // Replicated in Admin
 
 
+  // getPositions is replicated in Admin
   const getPositions = () => {
     fetch('/api/positions/all')
       .then((data) => data.json())
