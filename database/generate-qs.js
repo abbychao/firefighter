@@ -1,11 +1,12 @@
 const Question = require('./question-model.js');
 
+// To enter Mongo shell: mongo --shell
+
 const resetStarterQs = () => {
   const questions = [];
 
   // Forcible Entry Questions
   const q1 = {};
-  q1.id = 1;
   q1.position = 'Forcible Entry';
   q1.buildingType = 'Taxpayer';
   q1.fireType = 'Store Fire';
@@ -24,7 +25,6 @@ const resetStarterQs = () => {
   questions.push(q1);
 
   const q2 = {};
-  q2.id = 2;
   q2.position = 'Forcible Entry';
   q2.buildingType = 'Taxpayer';
   q2.fireType = 'Store Fire';
@@ -45,7 +45,6 @@ const resetStarterQs = () => {
   questions.push(q2);
 
   const q3 = {};
-  q3.id = 3;
   q3.position = 'Forcible Entry';
   q3.buildingType = 'Taxpayer';
   q3.fireType = 'Store Fire';
@@ -65,7 +64,6 @@ const resetStarterQs = () => {
 
   // Can Questions
   const q4 = {};
-  q4.id = 4;
   q4.position = 'Can';
   q4.buildingType = 'Taxpayer';
   q4.fireType = 'Store Fire';
@@ -84,7 +82,6 @@ const resetStarterQs = () => {
   questions.push(q4);
 
   const q5 = {};
-  q5.id = 5;
   q5.position = 'Can';
   q5.buildingType = 'Taxpayer';
   q5.fireType = 'Store Fire';
@@ -105,7 +102,6 @@ const resetStarterQs = () => {
   questions.push(q5);
 
   const q6 = {};
-  q6.id = 6;
   q6.position = 'Can';
   q6.buildingType = 'Taxpayer';
   q6.fireType = 'Store Fire';

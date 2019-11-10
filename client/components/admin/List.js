@@ -1,36 +1,59 @@
-import React, { useState, useEffect } from 'react';
-
-// TODO: Use componentDidMount() to get questions on load
+import React, { useContext, useEffect } from 'react';
+// regeneratorRuntime allows us to use async/await in handleNewClick function
+import regeneratorRuntime from "regenerator-runtime";
+import AdminContext from './Context';
 
 const List = () => {
-  const [displayQs, setDisplayQs] = useState([]);
-  const getQs = (position) => {
-    fetch(position === undefined ? `/api/questions/${position}` : '/api/questions/all')
-      .then(data => data.json())
-      // .then(data => console.log(data))
-      .then((questions) => {
-        console.log(questions);
-        const questionsArr = [];
-        questions.forEach((q) => {
-          questionsArr.push(
-            // TODO: On click, this should open the question in the body
-            <li name="list item" onClick={(e) => console.log(e.target.value)}>
-              {q.buildingType}
-              {q.position}
-              {q.question}
-            </li>
-          );
-        });
-        setDisplayQs(questionsArr);
-      })
-      .catch(err => console.log(err));
+  const context = useContext(AdminContext);
+  const {
+    displayQs,
+    setCurrentQ,
+    showForm,
+    setShowForm,
+    positions,
+    getPositions,
+    getQs,
+  } = context;
+
+  async function handleNewClick() {
+    // TODO: if a question is currently open with unsaved changes, prompt to save
+    // TODO: Switching between questions should also test for unsaved changes
+    if (showForm) {
+      const readyForNewForm = confirm('Do you wish to abandon changes?');
+      if (!readyForNewForm) return;
+    }
+    const newQ = {
+      position: '',
+      buildingType: '',
+      fireType: '',
+      question: '',
+      options: [],
+      answerIndex: '',
+      questionImage: '',
+      answerImage: '',
+      explanation: '',
+    };
+    setShowForm(false);
+    await setCurrentQ(newQ);
+    await setShowForm(true);
+    // if not, then populate the body with blank form
   }
 
-  return <>
-    <input type='text' placeholder="Position"></input>
-    <button onClick={getQs}>Load</button>
-    {displayQs}
-  </>;
-}
+  useEffect(getQs, []);
+  useEffect(getPositions, []);
+
+  const positionsArray = positions.map((position) => <option value={position} key={position}>{position}</option>);
+
+  return (
+    <div id="list">
+      <select onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }}>
+        <option value="all"> All Positions</option>
+        {positionsArray}
+      </select>
+      <input type="button" onClick={handleNewClick} value="New Question" />
+      {displayQs}
+    </div>
+  );
+};
 
 export default List;

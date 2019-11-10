@@ -1,11 +1,11 @@
 body {
   background-color: white;
   display: flex;
-  justify-content:center;
+  justify-content: center;
 }
 
 main {
-  width: 600px;
+  min-width: 600px;
   height: fit-content;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
@@ -45,7 +45,4 @@ button:focus {
   max-height: 400px;
   padding: 5px;
   border: solid 2px #EFEFEF;
-  /* display: block;
-  margin-left: auto;
-  margin-right: auto; */
 }
