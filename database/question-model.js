@@ -5,6 +5,8 @@ const uri = process.env.NODE_ENV === 'production'
   ? `mongodb+srv://admin:${process.env.DB_PASS}@cluster0-53vfg.mongodb.net/production`
   : 'mongodb://localhost/mongo';
 
+console.log('uri', uri);
+
 mongoose.connect(uri, {
   useCreateIndex: true,
   useNewUrlParser: true,
