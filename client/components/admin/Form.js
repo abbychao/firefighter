@@ -18,7 +18,7 @@ const StyledForm = styled.div`
 
 const Form = () => {
   const context = useContext(AdminContext);
-  const { currentQ, setShowForm, displayQs, setDisplayQs, getQs } = context;
+  const { currentQ, setShowForm, getQs } = context;
 
   // Other fields (ignored): createdAt, updatedAt, _id, __v
   const [position, setPosition] = useState(currentQ.position);
@@ -51,6 +51,7 @@ const Form = () => {
       .then(res => {
         context.setShowForm(false);
         alert('Saved!');
+        getQs();
       })
       .catch((err) => console.error(err));
   }
@@ -100,6 +101,7 @@ const Form = () => {
       .then(res => {
         setShowForm(false);
         alert('Created!');
+        getQs();
       })
       .catch((err) => console.error(err));
   }
