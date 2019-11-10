@@ -8,6 +8,7 @@ const uri = process.env.NODE_ENV === 'production'
 mongoose.connect(uri, {
   useCreateIndex: true,
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
 mongoose.connection.once('open', () => {
