@@ -33,29 +33,55 @@ const questionSchema = new Schema({
 
 const Question = mongoose.model('Question', questionSchema);
 
-// createQuestion adds a new question to the database, and also adds the question as
-// the "next question" from the last question of that position
+const positionSchema = new Schema({
+  name: { type: String, required: true },
+  first: { type: String, required: true },
+  last: { type: String, required: true },
+});
+
+const Position = mongoose.model('Position', positionSchema);
+
 // TODO: Error handling
 async function createQuestion(data) {
   if (!Object.prototype.hasOwnProperty.call(data, 'position')) throw new Error();
+  const { position } = data;
   try {
-    const lastQuestionId = getLastQuestionId(data.position);
     const newQuestion = await Question.create(data);
     const newQuestionId = newQuestion._id;
-    const updatedQuestion = await Question.updateOne({ _id: lastQuestionId }, { nextQuestionId: newQuestionId });
+
+    // Update the Position's last and prior Question's next, or create a new Position
+    const [positionObj] = await Position.find({ name: position });
+    if (positionObj._id) {
+      await Question.updateOne({ _id: positionObj.last }, { nextQuestionId: newQuestionId })
+      await Position.updateOne({ _id: positionObj._id }, { last: newQuestionId });
+    } else {
+      await Position.create({ name: position, first: newQuestionId, last: newQuestionId });
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
-async function getLastQuestionId(position) {
-  try {
-    const questions = await Question.find({ position });
-    return questions[questions.length - 1]._id;
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function getQuestionsByPosition(position) {
+//   try {
+//     const [positionObj] = await Position.find({ name: position });
+//     const questions = await Question.find({ position });
+//     const sortedQuestions = [];
+//     const questionObj = {};
+//     questions.forEach(question => {
+//       questionObj[question._id] = question;
+//     });
+//     let pointer = positionObj.first;
+//     sortedQuestions.push(questionObj[pointer]);
+//     while (positionObj.last !== pointer) {
+//       pointer = positionObj[pointer].next;
+//       sortedQuestions.push(questionObj[pointer]);
+//     }
+//     return sortedQuestions;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 async function deleteQuestion(id) {
   try {
