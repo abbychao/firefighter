@@ -1,4 +1,6 @@
-const Question = require('../database/question-model.js');
+const QuestionModel = require('../database/question-model.js');
+
+const { Question, createQuestion } = QuestionModel;
 
 const questionController = {};
 
@@ -66,6 +68,7 @@ questionController.updateById = (req, res) => {
   });
 };
 
+// TODO: Error handling
 questionController.create = (req, res) => {
   const {
     position,
@@ -88,12 +91,11 @@ questionController.create = (req, res) => {
     questionImage,
     answerImage,
     explanation,
+    nextQuestionId: null,
   };
-  Question.create(data, (err, response) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send();
-  });
-};
+  createQuestion(data);
+  return res.status(200).send();
+}
 
 questionController.deleteById = (req, res) => {
   Question.deleteOne({ _id: req.params.id }, (err, response) => {
