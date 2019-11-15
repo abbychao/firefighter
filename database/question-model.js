@@ -39,9 +39,7 @@ const Question = mongoose.model('Question', questionSchema);
 async function createQuestion(data) {
   if (!Object.prototype.hasOwnProperty.call(data, 'position')) throw new Error();
   try {
-    const questions = await Question.find({ position: data.position });
-    const lastQuestion = questions[questions.length - 1];
-    const lastQuestionId = lastQuestion._id;
+    const lastQuestionId = getLastQuestionId(data.position);
     const newQuestion = await Question.create(data);
     const newQuestionId = newQuestion._id;
     const updatedQuestion = await Question.updateOne({ _id: lastQuestionId }, { nextQuestionId: newQuestionId });
@@ -50,12 +48,32 @@ async function createQuestion(data) {
   }
 }
 
-function getFirstQuestion() { }
+async function getLastQuestionId(position) {
+  try {
+    const questions = await Question.find({ position });
+    return questions[questions.length - 1]._id;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-function updateQuestion() { }
+async function deleteQuestion(id) {
+  try {
+    // Find the prior question within the position order
+    const [currentQuestion] = await Question.find({ _id: id });
+    const questions = await Question.find({ position: currentQuestion.position });
+    let prevId = null;
+    let i = 0;
+    while (questions[i]._id.toString() !== id) {
+      prevId = questions[i]._id;
+      i += 1;
+    }
+    // Replace prior question's next with current's next, and then delete
+    await Question.updateOne({ _id: prevId }, { nextQuestionId: questions[i].nextQuestionId });
+    await Question.deleteOne({ _id: id });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-function deleteQuestion() { }
-
-function getNextQuestion() { }
-
-module.exports = { Question, createQuestion };
+module.exports = { Question, createQuestion, deleteQuestion };

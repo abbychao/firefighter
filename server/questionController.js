@@ -1,6 +1,6 @@
 const QuestionModel = require('../database/question-model.js');
 
-const { Question, createQuestion } = QuestionModel;
+const { Question, createQuestion, deleteQuestion } = QuestionModel;
 
 const questionController = {};
 
@@ -95,13 +95,12 @@ questionController.create = (req, res) => {
   };
   createQuestion(data);
   return res.status(200).send();
-}
-
-questionController.deleteById = (req, res) => {
-  Question.deleteOne({ _id: req.params.id }, (err, response) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(response);
-  });
 };
+
+// TODO: Error handling
+questionController.deleteById = (req, res) => {
+  deleteQuestion(req.params.id);
+  return res.status(200).send();
+}
 
 module.exports = questionController;
