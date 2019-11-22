@@ -1,6 +1,6 @@
 const QuestionModel = require('../database/question-model.js');
 
-const { Question, createQuestion, deleteQuestion } = QuestionModel;
+const { Question, createQuestion, deleteQuestion, getQuestionsByPosition } = QuestionModel;
 
 const questionController = {};
 
@@ -19,13 +19,13 @@ questionController.getById = (req, res) => {
   });
 };
 
-questionController.getByPosition = (req, res) => {
+async function getByPosition(req, res) {
   const { position } = req.params;
-  Question.find({ position }, (err, docs) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(docs);
-  });
+  const questions = await getQuestionsByPosition(position);
+  return res.status(200).send(questions);
 };
+
+questionController.getByPosition = getByPosition;
 
 questionController.getAllPositions = (req, res) => {
   Question.find({}, (err, docs) => {

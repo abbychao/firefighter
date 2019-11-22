@@ -62,26 +62,26 @@ async function createQuestion(data) {
   }
 }
 
-// async function getQuestionsByPosition(position) {
-//   try {
-//     const [positionObj] = await Position.find({ name: position });
-//     const questions = await Question.find({ position });
-//     const sortedQuestions = [];
-//     const questionObj = {};
-//     questions.forEach(question => {
-//       questionObj[question._id] = question;
-//     });
-//     let pointer = positionObj.first;
-//     sortedQuestions.push(questionObj[pointer]);
-//     while (positionObj.last !== pointer) {
-//       pointer = positionObj[pointer].next;
-//       sortedQuestions.push(questionObj[pointer]);
-//     }
-//     return sortedQuestions;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+async function getQuestionsByPosition(position) {
+  try {
+    const [positionObj] = await Position.find({ name: position });
+    const questions = await Question.find({ position });
+    const sortedQuestions = [];
+    const questionDict = {};
+    questions.forEach(question => {
+      questionDict[question._id] = question;
+    });
+    let currentId = positionObj.first;
+    sortedQuestions.push(questionDict[currentId]);
+    while (positionObj.last !== currentId) {
+      currentId = questionDict[currentId].nextQuestionId;
+      sortedQuestions.push(questionDict[currentId]);
+    }
+    return sortedQuestions;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function deleteQuestion(id) {
   try {
@@ -102,4 +102,4 @@ async function deleteQuestion(id) {
   }
 }
 
-module.exports = { Question, createQuestion, deleteQuestion };
+module.exports = { Question, createQuestion, deleteQuestion, getQuestionsByPosition };
