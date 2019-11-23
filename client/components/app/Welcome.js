@@ -3,12 +3,12 @@ import AppContext from './Context';
 
 const Welcome = () => {
   const context = useContext(AppContext);
-  const { positions, getPositions } = context;
-  useEffect(getPositions, []);
+  const { scenarios, getScenarios } = context;
+  useEffect(getScenarios, []);
 
-  const positionsHTML = [];
-  positions.forEach((position) => {
-    positionsHTML.push(<button onClick={context.selectPosition} value={position} key={`position${position}`}>{position}</button>);
+  const scenariosHTML = [];
+  scenarios.forEach((scenario) => {
+    scenariosHTML.push(<button onClick={context.selectScenario} value={scenario} key={`scenario${scenario}`}>{scenario}</button>);
   });
 
   return (
@@ -16,8 +16,8 @@ const Welcome = () => {
       <img src="../../public/images/fdny-study.jpg" alt="FDNY badge in classroom" />
       <h1>Welcome!</h1>
       <p>Get ready to ace the Lieutenant's exam! This simulation will help you prepare.</p>
-      <p>What is your position?</p>
-      {positionsHTML}
+      <p>What is your scenario?</p>
+      {scenariosHTML}
     </ >
   );
 };

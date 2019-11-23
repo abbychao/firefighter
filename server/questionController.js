@@ -1,6 +1,6 @@
 const QuestionModel = require('../database/questionModel.js');
 
-const { Question, createQuestion, deleteQuestion, getQuestionsByPosition } = QuestionModel;
+const { Question, createQuestion, deleteQuestion, getQuestionsByScenario } = QuestionModel;
 
 const questionController = {};
 
@@ -19,29 +19,29 @@ questionController.getById = (req, res) => {
   });
 };
 
-async function getByPosition(req, res) {
-  const { position } = req.params;
-  const questions = await getQuestionsByPosition(position);
+async function getByScenario(req, res) {
+  const { scenario } = req.params;
+  const questions = await getQuestionsByScenario(scenario);
   return res.status(200).send(questions);
 };
 
-questionController.getByPosition = getByPosition;
+questionController.getByScenario = getByScenario;
 
-questionController.getAllPositions = (req, res) => {
+questionController.getAllScenarios = (req, res) => {
   Question.find({}, (err, docs) => {
     if (err) return res.status(500).end(err);
-    const positions = new Set();
+    const scenarios = new Set();
     docs.forEach((question) => {
-      positions.add(question.position);
+      scenarios.add(question.scenario);
     });
-    return res.status(200).send(Array.from(positions));
+    return res.status(200).send(Array.from(scenarios));
   });
 };
 
 questionController.updateById = (req, res) => {
   const { id } = req.params;
   const {
-    position,
+    scenario,
     buildingType,
     fireType,
     question,
@@ -52,7 +52,7 @@ questionController.updateById = (req, res) => {
     explanation,
   } = req.body;
   const data = {
-    position,
+    scenario,
     buildingType,
     fireType,
     question,
@@ -71,7 +71,7 @@ questionController.updateById = (req, res) => {
 // TODO: Error handling
 questionController.create = (req, res) => {
   const {
-    position,
+    scenario,
     buildingType,
     fireType,
     question,
@@ -82,7 +82,7 @@ questionController.create = (req, res) => {
     explanation,
   } = req.body;
   const data = {
-    position,
+    scenario,
     buildingType,
     fireType,
     question,

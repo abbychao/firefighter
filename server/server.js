@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const questionController = require('./questionController.js');
-// const resetQs = require('../database/generateQs.js');
-// resetQs();
+const resetQs = require('../database/generateQs.js');
+resetQs();
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,8 +21,8 @@ app.get('/api/questions/id/:id', questionController.getById);
 app.put('/api/questions/id/:id', questionController.updateById);
 app.delete('/api/questions/id/:id', questionController.deleteById);
 
-app.get('/api/questions/position/:position', questionController.getByPosition);
-app.get('/api/positions/all', questionController.getAllPositions);
+app.get('/api/questions/scenario/:scenario', questionController.getByScenario);
+app.get('/api/scenarios/all', questionController.getAllScenarios);
 
 
 // If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server

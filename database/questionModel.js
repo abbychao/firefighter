@@ -17,7 +17,7 @@ mongoose.connection.once('open', () => {
 
 const questionSchema = new Schema({
   // id: { type: Number, unique: true, required: true },
-  position: { type: String, required: true },
+  scenario: { type: String, required: true },
   // buildingType: { type: String, required: true },
   // fireType: { type: String, required: true },
   question: { type: String, required: true },
@@ -33,47 +33,47 @@ const questionSchema = new Schema({
 
 const Question = mongoose.model('Question', questionSchema);
 
-const positionSchema = new Schema({
+const scenarioSchema = new Schema({
   name: { type: String, required: true },
   first: { type: String, required: true },
   last: { type: String, required: true },
 });
 
-const Position = mongoose.model('Position', positionSchema);
+const Scenario = mongoose.model('Scenario', scenarioSchema);
 
 // TODO: Error handling
 async function createQuestion(data) {
-  if (!Object.prototype.hasOwnProperty.call(data, 'position')) throw new Error();
-  const { position } = data;
+  if (!Object.prototype.hasOwnProperty.call(data, 'scenario')) throw new Error();
+  const { scenario } = data;
   try {
     const newQuestion = await Question.create({ ...data, nextQuestionId: null });
     const newQuestionId = newQuestion._id;
 
-    // Update the Position's last and prior Question's next, or create a new Position
-    const [positionObj] = await Position.find({ name: position });
-    if (positionObj === undefined) {
-      await Position.create({ name: position, first: newQuestionId, last: newQuestionId });
+    // Update the Scenario's last and prior Question's next, or create a new Scenario
+    const [scenarioObj] = await Scenario.find({ name: scenario });
+    if (scenarioObj === undefined) {
+      await Scenario.create({ name: scenario, first: newQuestionId, last: newQuestionId });
     } else {
-      await Question.updateOne({ _id: positionObj.last }, { nextQuestionId: newQuestionId });
-      await Position.updateOne({ _id: positionObj._id }, { last: newQuestionId });
+      await Question.updateOne({ _id: scenarioObj.last }, { nextQuestionId: newQuestionId });
+      await Scenario.updateOne({ _id: scenarioObj._id }, { last: newQuestionId });
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-async function getQuestionsByPosition(position) {
+async function getQuestionsByScenario(scenario) {
   try {
-    const [positionObj] = await Position.find({ name: position });
-    const questions = await Question.find({ position });
+    const [scenarioObj] = await Scenario.find({ name: scenario });
+    const questions = await Question.find({ scenario });
     const sortedQuestions = [];
     const questionDict = {};
     questions.forEach(question => {
       questionDict[question._id] = question;
     });
-    let currentId = positionObj.first;
+    let currentId = scenarioObj.first;
     sortedQuestions.push(questionDict[currentId]);
-    while (positionObj.last !== currentId) {
+    while (scenarioObj.last !== currentId) {
       currentId = questionDict[currentId].nextQuestionId;
       sortedQuestions.push(questionDict[currentId]);
     }
@@ -85,9 +85,9 @@ async function getQuestionsByPosition(position) {
 
 async function deleteQuestion(id) {
   try {
-    // Find the prior question within the position order
+    // Find the prior question within the scenario order
     const [currentQuestion] = await Question.find({ _id: id });
-    const questions = await Question.find({ position: currentQuestion.position });
+    const questions = await Question.find({ scenario: currentQuestion.scenario });
     let prevId = null;
     let i = 0;
     while (questions[i]._id.toString() !== id) {
@@ -104,8 +104,8 @@ async function deleteQuestion(id) {
 
 module.exports = {
   Question,
-  Position,
+  Scenario,
   createQuestion,
   deleteQuestion,
-  getQuestionsByPosition,
+  getQuestionsByScenario,
 };

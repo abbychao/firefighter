@@ -10,8 +10,8 @@ const List = () => {
     setCurrentQ,
     showForm,
     setShowForm,
-    positions,
-    getPositions,
+    scenarios,
+    getScenarios,
     getQs,
   } = context;
 
@@ -23,7 +23,7 @@ const List = () => {
       if (!readyForNewForm) return;
     }
     const newQ = {
-      position: '',
+      scenario: '',
       buildingType: '',
       fireType: '',
       question: '',
@@ -40,15 +40,15 @@ const List = () => {
   }
 
   useEffect(getQs, []);
-  useEffect(getPositions, []);
+  useEffect(getScenarios, []);
 
-  const positionsArray = positions.map((position) => <option value={position} key={position}>{position}</option>);
+  const scenariosArray = scenarios.map((scenario) => <option value={scenario} key={scenario}>{scenario}</option>);
 
   return (
     <div id="list">
       <select onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }}>
-        <option value="all"> All Positions</option>
-        {positionsArray}
+        <option value="all"> All Scenarios</option>
+        {scenariosArray}
       </select>
       <input type="button" onClick={handleNewClick} value="New Question" />
       {displayQs}

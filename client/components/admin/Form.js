@@ -21,7 +21,7 @@ const Form = () => {
   const { currentQ, setShowForm, getQs } = context;
 
   // Other fields (ignored): createdAt, updatedAt, _id, __v
-  const [position, setPosition] = useState(currentQ.position);
+  const [scenario, setScenario] = useState(currentQ.scenario);
   const [buildingType, setBuildingType] = useState(currentQ.buildingType);
   const [fireType, setFireType] = useState(currentQ.fireType);
   const [question, setQuestion] = useState(currentQ.question);
@@ -36,7 +36,7 @@ const Form = () => {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        position,
+        scenario,
         buildingType,
         fireType,
         question,
@@ -62,7 +62,7 @@ const Form = () => {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        position,
+        scenario,
         buildingType,
         fireType,
         question,
@@ -86,7 +86,7 @@ const Form = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        position,
+        scenario,
         buildingType,
         fireType,
         question,
@@ -138,8 +138,8 @@ const Form = () => {
   return (
     <StyledForm id="form">
       <label>
-        Position:
-        <input value={position} onChange={(e) => setPosition(e.target.value)} />
+        Scenario:
+        <input value={scenario} onChange={(e) => setScenario(e.target.value)} />
       </label>
       <label>
         Building Type:
