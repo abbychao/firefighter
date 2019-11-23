@@ -46,16 +46,16 @@ async function createQuestion(data) {
   if (!Object.prototype.hasOwnProperty.call(data, 'position')) throw new Error();
   const { position } = data;
   try {
-    const newQuestion = await Question.create(data);
+    const newQuestion = await Question.create({ ...data, nextQuestionId: null });
     const newQuestionId = newQuestion._id;
 
     // Update the Position's last and prior Question's next, or create a new Position
     const [positionObj] = await Position.find({ name: position });
-    if (positionObj._id) {
-      await Question.updateOne({ _id: positionObj.last }, { nextQuestionId: newQuestionId })
-      await Position.updateOne({ _id: positionObj._id }, { last: newQuestionId });
-    } else {
+    if (positionObj === undefined) {
       await Position.create({ name: position, first: newQuestionId, last: newQuestionId });
+    } else {
+      await Question.updateOne({ _id: positionObj.last }, { nextQuestionId: newQuestionId });
+      await Position.updateOne({ _id: positionObj._id }, { last: newQuestionId });
     }
   } catch (error) {
     console.log(error);
@@ -102,4 +102,10 @@ async function deleteQuestion(id) {
   }
 }
 
-module.exports = { Question, createQuestion, deleteQuestion, getQuestionsByPosition };
+module.exports = {
+  Question,
+  Position,
+  createQuestion,
+  deleteQuestion,
+  getQuestionsByPosition,
+};
