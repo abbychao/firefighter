@@ -1,6 +1,4 @@
-const QuestionModel = require('../database/questionModel.js');
-
-const { Question, createQuestion, deleteQuestion, getQuestionsByPosition } = QuestionModel;
+const Question = require('../database/question-model.js');
 
 const questionController = {};
 
@@ -19,13 +17,13 @@ questionController.getById = (req, res) => {
   });
 };
 
-async function getByPosition(req, res) {
+questionController.getByPosition = (req, res) => {
   const { position } = req.params;
-  const questions = await getQuestionsByPosition(position);
-  return res.status(200).send(questions);
+  Question.find({ position }, (err, docs) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(docs);
+  });
 };
-
-questionController.getByPosition = getByPosition;
 
 questionController.getAllPositions = (req, res) => {
   Question.find({}, (err, docs) => {
@@ -68,7 +66,6 @@ questionController.updateById = (req, res) => {
   });
 };
 
-// TODO: Error handling
 questionController.create = (req, res) => {
   const {
     position,
@@ -91,16 +88,18 @@ questionController.create = (req, res) => {
     questionImage,
     answerImage,
     explanation,
-    nextQuestionId: null,
   };
-  createQuestion(data);
-  return res.status(200).send();
+  Question.create(data, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send();
+  });
 };
 
-// TODO: Error handling
 questionController.deleteById = (req, res) => {
-  deleteQuestion(req.params.id);
-  return res.status(200).send();
-}
+  Question.deleteOne({ _id: req.params.id }, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(response);
+  });
+};
 
 module.exports = questionController;
