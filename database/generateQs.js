@@ -1,4 +1,4 @@
-const QuestionModel = require('./question-model.js');
+const QuestionModel = require('./questionModel.js');
 
 // To enter Mongo shell: mongo --shell
 
