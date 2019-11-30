@@ -64,7 +64,6 @@ questionController.updateById = (req, res) => {
   });
 };
 
-// TODO: Error handling
 questionController.create = (req, res) => {
   const {
     scenario,
@@ -83,16 +82,18 @@ questionController.create = (req, res) => {
     questionImage,
     answerImage,
     explanation,
-    nextQuestionId: null,
   };
-  createQuestion(data);
-  return res.status(200).send();
+  Question.create(data, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send();
+  });
 };
 
-// TODO: Error handling
 questionController.deleteById = (req, res) => {
-  deleteQuestion(req.params.id);
-  return res.status(200).send();
-}
+  Question.deleteOne({ _id: req.params.id }, (err, response) => {
+    if (err) return res.status(500).end(err);
+    return res.status(200).send(response);
+  });
+};
 
 module.exports = questionController;
