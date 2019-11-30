@@ -7,7 +7,6 @@ const AppProvider = (props) => {
     {
       id: 0,
       scenario: '',
-      buildingType: '',
       fireType: '',
       question: '',
       options: [''],

@@ -11,7 +11,7 @@ main {
 }
 
 button {  
-  width: 90px;
+  width: 120px;
   margin-right: 5px;
 }
 
@@ -33,7 +33,7 @@ button:focus {
 } 
 
 #nav div {
-  width: 180px;
+  /* width: 180px; */
 }
 
 #nav div label {

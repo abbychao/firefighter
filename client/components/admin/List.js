@@ -24,8 +24,6 @@ const List = () => {
     }
     const newQ = {
       scenario: '',
-      buildingType: '',
-      fireType: '',
       question: '',
       options: [],
       answerIndex: '',

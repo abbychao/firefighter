@@ -24,7 +24,7 @@ const AdminProvider = ({ setView, children }) => {
         questions.forEach((q) => {
           questionsArr.push(
             <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
-              {q.scenario} {q.buildingType} {q.question}
+              {q.scenario} {q.question}
             </li>
           );
         });

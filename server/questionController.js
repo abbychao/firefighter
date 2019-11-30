@@ -42,8 +42,6 @@ questionController.updateById = (req, res) => {
   const { id } = req.params;
   const {
     scenario,
-    buildingType,
-    fireType,
     question,
     options,
     answerIndex,
@@ -53,8 +51,6 @@ questionController.updateById = (req, res) => {
   } = req.body;
   const data = {
     scenario,
-    buildingType,
-    fireType,
     question,
     options,
     answerIndex,
@@ -72,8 +68,6 @@ questionController.updateById = (req, res) => {
 questionController.create = (req, res) => {
   const {
     scenario,
-    buildingType,
-    fireType,
     question,
     options,
     answerIndex,
@@ -83,8 +77,6 @@ questionController.create = (req, res) => {
   } = req.body;
   const data = {
     scenario,
-    buildingType,
-    fireType,
     question,
     options,
     answerIndex,

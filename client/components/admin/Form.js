@@ -22,8 +22,6 @@ const Form = () => {
 
   // Other fields (ignored): createdAt, updatedAt, _id, __v
   const [scenario, setScenario] = useState(currentQ.scenario);
-  const [buildingType, setBuildingType] = useState(currentQ.buildingType);
-  const [fireType, setFireType] = useState(currentQ.fireType);
   const [question, setQuestion] = useState(currentQ.question);
   const [options, setOptions] = useState(currentQ.options);
   const [answerIndex, setAnswerIndex] = useState(currentQ.answerIndex);
@@ -37,8 +35,6 @@ const Form = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         scenario,
-        buildingType,
-        fireType,
         question,
         options,
         answerIndex,
@@ -63,8 +59,6 @@ const Form = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         scenario,
-        buildingType,
-        fireType,
         question,
         options,
         answerIndex,
@@ -87,8 +81,6 @@ const Form = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         scenario,
-        buildingType,
-        fireType,
         question,
         options,
         answerIndex,
@@ -140,14 +132,6 @@ const Form = () => {
       <label>
         Scenario:
         <input value={scenario} onChange={(e) => setScenario(e.target.value)} />
-      </label>
-      <label>
-        Building Type:
-        <input value={buildingType} onChange={(e) => setBuildingType(e.target.value)} />
-      </label>
-      <label>
-        Fire Type:
-        <input value={fireType} onChange={(e) => setFireType(e.target.value)} />
       </label>
       <label>
         Question:
