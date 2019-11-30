@@ -1,5 +1,5 @@
 {
-  "name": "solo-project",
+  "name": "firefighter",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -7,35 +7,47 @@
     "start": "NODE_ENV=production node server/server.js",
     "test": "test",
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server & nodemon server/server.js"
+    "dev": "NODE_ENV=development webpack-dev-server & nodemon server/server.js",
+    "lint": "eslint server/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abbychao/solo-project.git"
+    "url": "git+https://github.com/abbychao/firefighter.git"
   },
   "author": "Abby Chao",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/abbychao/solo-project/issues"
+    "url": "https://github.com/abbychao/firefighter/issues"
   },
-  "homepage": "https://github.com/abbychao/solo-project#readme",
+  "homepage": "https://github.com/abbychao/firefighter#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.6.9",
+    "mongoose": "^5.7.9",
     "pg": "^7.12.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "webpack": "^4.39.2"
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-test-renderer": "^16.11.0",
+    "regenerator-runtime": "^0.13.3",
+    "styled-components": "^4.4.1",
+    "webpack": "^4.41.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "mini-css-extract-plugin": "^0.7.0",
     "style-loader": "^0.23.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   }
 }
