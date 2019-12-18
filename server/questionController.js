@@ -1,6 +1,6 @@
-const QuestionModel = require('../database/questionModel.js');
+const questionModel = require('../database/questionModel.js');
 
-const { Question, createQuestion, deleteQuestion, getQuestionsByScenario } = QuestionModel;
+const { Question, createQuestion, deleteQuestion, getQuestionsByScenario } = questionModel;
 
 const questionController = {};
 

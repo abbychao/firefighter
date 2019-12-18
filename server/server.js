@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const questionController = require('./questionController.js');
-// const resetQs = require('../database/generate-qs.js');
+// const resetQs = require('../database/generateQs.js');
 // resetQs();
 
 const app = express();

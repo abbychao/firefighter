@@ -1,45 +1,4 @@
-const mongoose = require('mongoose');
-
-const { Schema } = mongoose;
-const uri = process.env.NODE_ENV === 'production'
-  ? `mongodb+srv://admin:${process.env.DB_PASS}@cluster0-53vfg.mongodb.net/production`
-  : 'mongodb://localhost/mongo';
-
-mongoose.connect(uri, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: false,
-});
-
-mongoose.connection.once('open', () => {
-  console.log('connected to MongoDB');
-});
-
-const questionSchema = new Schema({
-  // id: { type: Number, unique: true, required: true },
-  scenario: { type: String, required: true },
-  // buildingType: { type: String, required: true },
-  // fireType: { type: String, required: true },
-  question: { type: String, required: true },
-  options: { type: Object, required: true },
-  answerIndex: { type: Number, required: true },
-  questionImage: String,
-  answerImage: String,
-  explanation: { type: String, required: true },
-  nextQuestionId: String,
-  createdAt: Date,
-  updatedAt: Date,
-});
-
-const Question = mongoose.model('Question', questionSchema);
-
-const scenarioSchema = new Schema({
-  name: { type: String, required: true },
-  first: { type: String, required: true },
-  last: { type: String, required: true },
-});
-
-const Scenario = mongoose.model('Scenario', scenarioSchema);
+const { Question, Scenario } = require('./database.js');
 
 // TODO: Error handling
 async function createQuestion(data) {

@@ -1,4 +1,5 @@
-const Question = require('./question-model.js');
+const database = require('./database.js');
+const questionModel = require('./questionModel.js');
 
 // To enter Mongo shell: mongo --shell
 
@@ -110,19 +111,19 @@ const resetStarterQs = () => {
   refreshDB(questions);
 };
 
-function refreshDB(questions) {
-  Question.deleteMany({}, (err, res) => {
+async function refreshDB(questions) {
+  database.Question.deleteMany({}, (err, res) => {
     console.log('refreshed database: ', err ? err : res);
     // TODO: Use Model.bulkWrite instead of Model.create
-    Question.create(questions, (err) => {
+    database.Question.create(questions, (err) => {
       if (err) console.log('mongoose create', err);
     });
   });
-  await QuestionModel.Scenario.deleteMany({}, (err, res) => {
+  await database.Scenario.deleteMany({}, (err, res) => {
     console.log('refreshed scenarios: ', err || res);
   });
   for (let i = 0; i < questions.length; i += 1) {
-    await QuestionModel.createQuestion(questions[i]);
+    await questionModel.createQuestion(questions[i]);
   }
 }
 
