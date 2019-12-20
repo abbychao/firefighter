@@ -1,5 +1,4 @@
-const { Scenario } = require('../database/database.js');
-const ScenarioModel = require('../database/scenarioModel');
+const ScenarioModel = require('../database/scenarioModel.js');
 
 const scenarioController = {};
 
@@ -17,12 +16,11 @@ scenarioController.create = async (req, res) => {
   };
   const scenarioId = await ScenarioModel.createScenario(data);
   return res.status(200).send(scenarioId);
-  Scenario.create(data, (err, response) => {
-    console.log('response', response._id);
-    console.log('err', err);
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(response);
-  });
+};
+
+scenarioController.getAll = async (req, res) => {
+  const scenarios = await ScenarioModel.getAll();
+  return res.status(200).send(scenarios);
 };
 
 module.exports = scenarioController;

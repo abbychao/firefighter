@@ -8,13 +8,13 @@ const getScenarios = () => {
     building: 'Taxpayer',
     buildingDetails: 'Store Fire',
     position: 'Forcible Entry',
-    due: 1,
+    due: '1st',
   };
   const scenario2 = {
     building: 'Taxpayer',
     buildingDetails: 'Store Fire',
     position: 'Can',
-    due: 1,
+    due: '2nd',
   };
   return [scenario1, scenario2];
 };

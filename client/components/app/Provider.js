@@ -43,8 +43,8 @@ const AppProvider = (props) => {
     setQuestionIndex(0);
   };
   const selectScenario = (e) => {
-    const scenario = e.target.value;
-    fetch(`/api/questions/scenario/${scenario}`)
+    const scenarioId = e.target.value;
+    fetch(`/api/questions/s/${scenarioId}`)
       .then((data) => data.json())
       .then((data) => {
         setScreen('start');

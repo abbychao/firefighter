@@ -29,6 +29,14 @@ ScenarioModel.addQuestion = async (scenarioId, questionData) => {
   }
 };
 
+ScenarioModel.getAll = async () => {
+  try {
+    return Scenario.find({});
+  } catch (error) {
+    console.log('ScenarioModel.getAllScenarios', error);
+  }
+};
+
 ScenarioModel.getQuestionsByScenario = async (scenarioId) => {
   try {
     const [scenarioObj] = await Scenario.find({ _id: scenarioId });
@@ -48,6 +56,6 @@ ScenarioModel.getQuestionsByScenario = async (scenarioId) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = ScenarioModel;

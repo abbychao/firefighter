@@ -8,7 +8,18 @@ const Welcome = () => {
 
   const scenariosHTML = [];
   scenarios.forEach((scenario) => {
-    scenariosHTML.push(<button onClick={context.selectScenario} value={scenario} key={`scenario${scenario}`}>{scenario}</button>);
+    const { building, buildingDetails, position, due } = scenario;
+    const name = `${building} ${buildingDetails} ${position} ${due} Due`;
+    scenariosHTML.push(
+      <button
+        onClick={context.selectScenario}
+        value={scenario._id}
+        key={`scenario${scenario._id}`}
+        type="button"
+      >
+        {name}
+      </button>,
+    );
   });
 
   return (
