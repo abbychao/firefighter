@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose');
 
 const questionSchema = new Schema({
-  scenario: { type: String, required: true },
+  scenarioId: { type: String, required: true },
   question: { type: String, required: true },
   options: { type: Object, required: true },
   answerIndex: { type: Number, required: true },

@@ -1,9 +1,12 @@
 const { Schema } = require('mongoose');
 
 const scenarioSchema = new Schema({
-  name: { type: String, required: true },
-  first: { type: String, required: true },
-  last: { type: String, required: true },
+  building: { type: String, required: true },
+  buildingDetails: String,
+  position: { type: String, required: true },
+  due: { type: Number, required: true },
+  first: String,
+  last: String,
 });
 
 module.exports = scenarioSchema;

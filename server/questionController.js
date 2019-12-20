@@ -1,6 +1,8 @@
-const questionModel = require('../database/questionModel.js');
+const QuestionModel = require('../database/questionModel.js');
+const ScenarioModel = require('../database/scenarioModel.js');
 
-const { Question, createQuestion, deleteQuestion, getQuestionsByScenario } = questionModel;
+const { Question } = QuestionModel;
+const { getQuestionsByScenario } = ScenarioModel;
 
 const questionController = {};
 
@@ -19,13 +21,11 @@ questionController.getById = (req, res) => {
   });
 };
 
-async function getByScenario(req, res) {
-  const { scenario } = req.params;
-  const questions = await getQuestionsByScenario(scenario);
+questionController.getByScenario = async (req, res) => {
+  const { scenarioId } = req.params;
+  const questions = await getQuestionsByScenario(scenarioId);
   return res.status(200).send(questions);
 };
-
-questionController.getByScenario = getByScenario;
 
 questionController.getAllScenarios = (req, res) => {
   Question.find({}, (err, docs) => {
