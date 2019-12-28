@@ -16,15 +16,15 @@ const AdminProvider = ({ setView, children }) => {
       })
       .catch((err) => console.error(err));
   };
-  function getQs(scenario) {
-    fetch(scenario === undefined ? '/api/questions/all' : `/api/questions/scenario/${scenario}`)
+  function getQs(scenarioId) {
+    fetch(scenarioId === undefined ? '/api/questions/all' : `/api/questions/s/${scenarioId}`)
       .then(data => data.json())
       .then((questions) => {
         const questionsArr = [];
         questions.forEach((q) => {
           questionsArr.push(
             <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
-              {q.scenario} {q.question}
+              {q.question}
             </li>
           );
         });
@@ -38,7 +38,7 @@ const AdminProvider = ({ setView, children }) => {
     getQById(id)
       .then((result) => {
         setShowForm(false);
-        setCurrentQ(result[0]);
+        setCurrentQ(result);
         setShowForm(true);
       });
   }

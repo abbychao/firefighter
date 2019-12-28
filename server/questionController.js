@@ -1,28 +1,25 @@
 const QuestionModel = require('../database/questionModel.js');
 const ScenarioModel = require('../database/scenarioModel.js');
+const Model = require('../database/model.js');
 
 const { Question } = QuestionModel;
 
 const questionController = {};
 
-questionController.getAll = (req, res) => {
-  Question.find({}, (err, docs) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(docs);
-  });
+questionController.getAll = async (req, res) => {
+  const questions = await QuestionModel.getAll();
+  return res.status(200).send(questions);
 };
 
-questionController.getById = (req, res) => {
+questionController.getById = async (req, res) => {
   const { id } = req.params;
-  Question.find({ _id: id }, (err, docs) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(docs);
-  });
+  const question = await QuestionModel.getById(id);
+  return res.status(200).send(question);
 };
 
 questionController.getByScenario = async (req, res) => {
   const { scenarioId } = req.params;
-  const questions = await ScenarioModel.getQuestionsByScenario(scenarioId);
+  const questions = await Model.getQuestionsByScenario(scenarioId);
   return res.status(200).send(questions);
 };
 
@@ -37,10 +34,10 @@ questionController.getAllScenarios = (req, res) => {
   });
 };
 
-questionController.updateById = (req, res) => {
+questionController.updateById = async (req, res) => {
   const { id } = req.params;
   const {
-    scenario,
+    scenarioId,
     question,
     options,
     answerIndex,
@@ -49,7 +46,7 @@ questionController.updateById = (req, res) => {
     explanation,
   } = req.body;
   const data = {
-    scenario,
+    scenarioId,
     question,
     options,
     answerIndex,
@@ -57,15 +54,13 @@ questionController.updateById = (req, res) => {
     answerImage,
     explanation,
   };
-  Question.updateOne({ _id: id }, data, (err, response) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(response);
-  });
+  await Model.updateQuestionById(id, data);
+  return res.status(200).send();
 };
 
-questionController.create = (req, res) => {
+questionController.create = async (req, res) => {
   const {
-    scenario,
+    scenarioId,
     question,
     options,
     answerIndex,
@@ -73,8 +68,8 @@ questionController.create = (req, res) => {
     answerImage,
     explanation,
   } = req.body;
+  console.log('scenarioId', scenarioId);
   const data = {
-    scenario,
     question,
     options,
     answerIndex,
@@ -82,13 +77,14 @@ questionController.create = (req, res) => {
     answerImage,
     explanation,
   };
-  Question.create(data, (err, response) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send();
-  });
+  await ScenarioModel.addQuestion(scenarioId, data);
+  return res.status(200).send();
 };
 
-questionController.deleteById = (req, res) => {
+questionController.deleteById = async (req, res) => {
+  const { id } = req.params;
+  await Model.deleteQuestionById(id);
+  return res.status(200).send();
   Question.deleteOne({ _id: req.params.id }, (err, response) => {
     if (err) return res.status(500).end(err);
     return res.status(200).send(response);

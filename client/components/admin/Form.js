@@ -3,6 +3,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import AdminContext from './Context';
+import ScenarioMenu from './ScenarioMenu';
 
 const StyledForm = styled.div`
   label {
@@ -21,7 +22,7 @@ const Form = () => {
   const { currentQ, setShowForm, getQs } = context;
 
   // Other fields (ignored): createdAt, updatedAt, _id, __v
-  const [scenario, setScenario] = useState(currentQ.scenario);
+  const [scenarioId, setScenarioId] = useState(currentQ.scenarioId);
   const [question, setQuestion] = useState(currentQ.question);
   const [options, setOptions] = useState(currentQ.options);
   const [answerIndex, setAnswerIndex] = useState(currentQ.answerIndex);
@@ -34,7 +35,7 @@ const Form = () => {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        scenario,
+        scenarioId,
         question,
         options,
         answerIndex,
@@ -58,7 +59,7 @@ const Form = () => {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        scenario,
+        scenarioId,
         question,
         options,
         answerIndex,
@@ -80,7 +81,7 @@ const Form = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        scenario,
+        scenarioId,
         question,
         options,
         answerIndex,
@@ -131,7 +132,7 @@ const Form = () => {
     <StyledForm id="form">
       <label>
         Scenario:
-        <input value={scenario} onChange={(e) => setScenario(e.target.value)} />
+        <ScenarioMenu onChange={(e) => setScenarioId(e.target.value)} />
       </label>
       <label>
         Question:

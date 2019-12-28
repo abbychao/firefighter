@@ -1,9 +1,8 @@
 const { Scenario, Question } = require('./database.js');
-const QuestionModel = require('./questionModel.js');
 
 const ScenarioModel = {};
 
-ScenarioModel.createScenario = async (data) => {
+ScenarioModel.create = async (data) => {
   try {
     const response = await Scenario.create(data);
     const scenarioId = response._id;
@@ -13,28 +12,20 @@ ScenarioModel.createScenario = async (data) => {
   }
 };
 
-ScenarioModel.addQuestion = async (scenarioId, questionData) => {
-  try {
-    const newQuestionId = await QuestionModel.createQuestion({ scenarioId, ...questionData });
-    const [scenarioObj] = await Scenario.find({ _id: scenarioId });
-    if (scenarioObj.first === undefined) {
-      await Scenario.updateOne({ _id: scenarioId }, { first: newQuestionId });
-    } else {
-      await QuestionModel.updateNextQuestionId(scenarioObj.last, newQuestionId);
-    }
-    await Scenario.updateOne({ _id: scenarioId }, { last: newQuestionId });
-  } catch (error) {
-    console.log('ScenarioModel.addQuestion', error);
-  }
+ScenarioModel.getAll = async () => Scenario.find({});
+
+ScenarioModel.getById = async (id) => {
+  const [scenario] = await Scenario.find({ _id: id });
+  return scenario;
 };
 
-ScenarioModel.getAll = async () => {
-  try {
-    return Scenario.find({});
-  } catch (error) {
-    console.log('ScenarioModel.getAllScenarios', error);
-  }
-};
+ScenarioModel.updateFirst = async (scenarioId, questionId) => (
+  Scenario.updateOne({ _id: scenarioId }, { first: questionId })
+);
+
+ScenarioModel.updateLast = async (scenarioId, questionId) => (
+  Scenario.updateOne({ _id: scenarioId }, { last: questionId })
+);
 
 ScenarioModel.getQuestionsByScenario = async (scenarioId) => {
   try {
