@@ -27,20 +27,19 @@ Model.updateQuestionById = async (id, data) => {
   await Model.deleteQuestionById(id);
 };
 
-// TODO: Fix - TypeError: Cannot read property 'nextQuestionId' of undefined
 Model.deleteQuestionById = async (id) => {
   const question = await QuestionModel.getById(id);
   const { scenarioId } = question;
   const scenario = await ScenarioModel.getById(scenarioId);
   let previousId = scenario.first;
   let previousQuestion = await QuestionModel.getById(previousId);
-  while (previousQuestion.nextQuestionId !== id) {
+  while (previousQuestion.nextQuestionId && previousQuestion.nextQuestionId !== id) {
     previousId = previousQuestion.nextQuestionId;
     previousQuestion = await QuestionModel.getById(previousId);
   }
   if (scenario.first === id) await ScenarioModel.updateFirst(scenarioId, question.nextQuestionId);
   if (scenario.last === id) await ScenarioModel.updateLast(scenarioId, previousId);
-  await QuestionModel.updateNextQuestionId(previousId, id);
+  await QuestionModel.updateNextQuestionId(previousId, question.nextQuestionId);
   return QuestionModel.deleteById(id);
 };
 
