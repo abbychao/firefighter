@@ -1,8 +1,6 @@
 const QuestionModel = require('../database/questionModel.js');
 const Model = require('../database/model.js');
 
-const { Question } = QuestionModel;
-
 const questionController = {};
 
 questionController.getAll = async (req, res) => {
@@ -20,17 +18,6 @@ questionController.getByScenario = async (req, res) => {
   const { scenarioId } = req.params;
   const questions = await Model.getQuestionsByScenario(scenarioId);
   return res.status(200).send(questions);
-};
-
-questionController.getAllScenarios = (req, res) => {
-  Question.find({}, (err, docs) => {
-    if (err) return res.status(500).end(err);
-    const scenarios = new Set();
-    docs.forEach((question) => {
-      scenarios.add(question.scenario);
-    });
-    return res.status(200).send(Array.from(scenarios));
-  });
 };
 
 questionController.updateById = async (req, res) => {
