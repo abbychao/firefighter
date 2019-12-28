@@ -143,12 +143,13 @@ const resetStarterQs = async () => {
   const [scenario1, scenario2] = getScenarios();
   const scenarioId1 = await ScenarioModel.createScenario(scenario1);
   const scenarioId2 = await ScenarioModel.createScenario(scenario2);
-
   const questions1 = getQuestions1();
-  questions1.forEach((q) => ScenarioModel.addQuestion(scenarioId1, q));
-
   const questions2 = getQuestions2();
-  questions2.forEach((q) => ScenarioModel.addQuestion(scenarioId2, q));
+  // For each question in the arrays above, add it to the appropriate scenario
+  for (let i = 0; i < questions1.length; i++) {
+    await ScenarioModel.addQuestion(scenarioId1, questions1[i]);
+    await ScenarioModel.addQuestion(scenarioId2, questions2[i]);
+  }
 };
 
 module.exports = resetStarterQs;

@@ -2,7 +2,6 @@ const QuestionModel = require('../database/questionModel.js');
 const ScenarioModel = require('../database/scenarioModel.js');
 
 const { Question } = QuestionModel;
-const { getQuestionsByScenario } = ScenarioModel;
 
 const questionController = {};
 
@@ -23,7 +22,7 @@ questionController.getById = (req, res) => {
 
 questionController.getByScenario = async (req, res) => {
   const { scenarioId } = req.params;
-  const questions = await getQuestionsByScenario(scenarioId);
+  const questions = await ScenarioModel.getQuestionsByScenario(scenarioId);
   return res.status(200).send(questions);
 };
 

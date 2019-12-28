@@ -16,14 +16,13 @@ ScenarioModel.createScenario = async (data) => {
 ScenarioModel.addQuestion = async (scenarioId, questionData) => {
   try {
     const newQuestionId = await QuestionModel.createQuestion({ scenarioId, ...questionData });
-    const scenarioObj = await Scenario.find({ _id: scenarioId });
+    const [scenarioObj] = await Scenario.find({ _id: scenarioId });
     if (scenarioObj.first === undefined) {
-      scenarioObj.first = newQuestionId;
+      await Scenario.updateOne({ _id: scenarioId }, { first: newQuestionId });
     } else {
-      QuestionModel.updateNextQuestionId(scenarioObj.last, newQuestionId);
+      await QuestionModel.updateNextQuestionId(scenarioObj.last, newQuestionId);
     }
-    scenarioObj.last = newQuestionId;
-    await Scenario.updateOne({ _id: scenarioId }, { ...scenarioObj });
+    await Scenario.updateOne({ _id: scenarioId }, { last: newQuestionId });
   } catch (error) {
     console.log('ScenarioModel.addQuestion', error);
   }
