@@ -15,7 +15,7 @@ Model.addQuestion = async (scenarioId, questionData) => {
     }
     await ScenarioModel.updateLast(scenarioId, newQuestionId);
   } catch (error) {
-    console.log('ScenarioModel.addQuestion', error);
+    console.log('Model.addQuestion', error);
   }
 };
 Model.updateQuestionById = async (id, data) => {

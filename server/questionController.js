@@ -1,5 +1,4 @@
 const QuestionModel = require('../database/questionModel.js');
-const ScenarioModel = require('../database/scenarioModel.js');
 const Model = require('../database/model.js');
 
 const { Question } = QuestionModel;
@@ -68,7 +67,6 @@ questionController.create = async (req, res) => {
     answerImage,
     explanation,
   } = req.body;
-  console.log('scenarioId', scenarioId);
   const data = {
     question,
     options,
@@ -77,7 +75,7 @@ questionController.create = async (req, res) => {
     answerImage,
     explanation,
   };
-  await ScenarioModel.addQuestion(scenarioId, data);
+  await Model.addQuestion(scenarioId, data);
   return res.status(200).send();
 };
 
@@ -85,10 +83,6 @@ questionController.deleteById = async (req, res) => {
   const { id } = req.params;
   await Model.deleteQuestionById(id);
   return res.status(200).send();
-  Question.deleteOne({ _id: req.params.id }, (err, response) => {
-    if (err) return res.status(500).end(err);
-    return res.status(200).send(response);
-  });
 };
 
 module.exports = questionController;
