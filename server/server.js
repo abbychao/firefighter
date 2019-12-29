@@ -26,6 +26,7 @@ app.get('/api/questions/s/:scenarioId', questionController.getByScenario);
 
 app.get('/api/scenarios/all', scenarioController.getAll);
 app.post('/api/scenarios', scenarioController.create);
+app.get('/api/scenarios/id/:id', scenarioController.getById);
 
 // If deployed to cloud, use that port; otherwise display 3000 for local and 8080 for dev server
 const port = process.env.NODE_ENV === 'production' ? 3000 : 8080;

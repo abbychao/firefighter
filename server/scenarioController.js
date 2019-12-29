@@ -23,4 +23,10 @@ scenarioController.getAll = async (req, res) => {
   return res.status(200).send(scenarios);
 };
 
+scenarioController.getById = async (req, res) => {
+  const { id } = req.params;
+  const scenario = await ScenarioModel.getById(id);
+  return res.status(200).send(scenario);
+};
+
 module.exports = scenarioController;
