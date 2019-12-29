@@ -97,7 +97,6 @@ const Welcome = () => {
       <br />
       <i>{scenarios.length} scenarios selected</i>
       <br />
-      {console.log(selections)}
       {scenariosHTML}
     </ >
   );
