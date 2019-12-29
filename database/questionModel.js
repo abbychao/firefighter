@@ -27,4 +27,6 @@ QuestionModel.updateById = async (id, data) => Question.updateOne({ _id: id }, {
 
 QuestionModel.deleteById = async (id) => Question.deleteOne({ _id: id });
 
+QuestionModel.getAllByScenarioId = async (scenarioId) => Question.find({ scenarioId });
+
 module.exports = QuestionModel;
