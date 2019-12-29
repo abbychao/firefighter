@@ -43,4 +43,25 @@ Model.deleteQuestionById = async (id) => {
   return QuestionModel.deleteById(id);
 };
 
+Model.getQuestionsByScenario = async (scenarioId) => {
+  try {
+    const scenario = await ScenarioModel.getById(scenarioId);
+    const questions = await QuestionModel.getAllByScenarioId(scenarioId);
+    const sortedQuestions = [];
+    const questionDict = {};
+    questions.forEach((question) => {
+      questionDict[question._id] = question;
+    });
+    let currentId = scenario.first;
+    sortedQuestions.push(questionDict[currentId]);
+    while (scenario.last !== currentId) {
+      currentId = questionDict[currentId].nextQuestionId;
+      sortedQuestions.push(questionDict[currentId]);
+    }
+    return sortedQuestions;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = Model;
