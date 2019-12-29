@@ -23,6 +23,7 @@ const AppProvider = (props) => {
   const [questions, setQuestions] = useState(initialQuestionArray);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [scenarios, setScenarios] = useState([]); // Replicated in Admin
+  const [currentScenario, setScenario] = useState({});
 
 
   // getScenarios is replicated in Admin
@@ -44,11 +45,16 @@ const AppProvider = (props) => {
   };
   const selectScenario = (e) => {
     const scenarioId = e.target.value;
+    fetch(`/api/scenarios/id/${scenarioId}`)
+      .then((data) => data.json())
+      .then((scenario) => {
+        setScenario(scenario);
+      });
     fetch(`/api/questions/s/${scenarioId}`)
       .then((data) => data.json())
-      .then((data) => {
+      .then((questions) => {
         setScreen('start');
-        setQuestions(data);
+        setQuestions(questions);
       })
       .catch((err) => console.error(err));
   };
@@ -89,6 +95,7 @@ const AppProvider = (props) => {
       saveAnswer,
       scenarios,
       getScenarios,
+      currentScenario,
     }}
     >
       {props.children}
