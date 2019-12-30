@@ -36,8 +36,9 @@ button:focus {
   /* width: 180px; */
 }
 
-#nav div label {
+#nav div .bold {
   font-weight: bold;
+  padding-left: 2px;
 }
 
 #body img {
