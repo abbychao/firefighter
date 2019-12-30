@@ -22,16 +22,17 @@ const AppProvider = (props) => {
   const [scenarioWon, setScenarioWon] = useState(true);
   const [questions, setQuestions] = useState(initialQuestionArray);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [scenarios, setScenarios] = useState([]); // Replicated in Admin
+  const [allScenarios, setAllScenarios] = useState([]); // Replicated in Admin
   const [currentScenario, setScenario] = useState({});
+  const [selectedScenarios, setSelectedScenarios] = useState([]);
 
 
-  // getScenarios is replicated in Admin
-  const getScenarios = () => {
+  // getAllScenarios is replicated in Admin
+  const getAllScenarios = () => {
     fetch('/api/scenarios/all')
       .then((data) => data.json())
       .then((scenariosArray) => {
-        setScenarios(scenariosArray);
+        setAllScenarios(scenariosArray);
       })
       .catch((err) => console.error(err));
   };
@@ -43,18 +44,31 @@ const AppProvider = (props) => {
     setQuestions(initialQuestionArray);
     setQuestionIndex(0);
   };
-  const selectScenario = (e) => {
-    const scenarioId = e.target.value;
+  const getScenario = (e) => {
+    /**
+    * Randomize array element order in-place.
+    * Using Durstenfeld shuffle algorithm.
+    */
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    const shuffledScenarios = shuffle(selectedScenarios);
+    const scenarioId = shuffledScenarios[0]._id;
     fetch(`/api/scenarios/id/${scenarioId}`)
       .then((data) => data.json())
       .then((scenario) => {
         setScenario(scenario);
-      });
+      })
+      .catch((err) => console.error(err));
     fetch(`/api/questions/s/${scenarioId}`)
       .then((data) => data.json())
-      .then((questions) => {
+      .then((data) => {
         setScreen('start');
-        setQuestions(questions);
+        setQuestions(data);
       })
       .catch((err) => console.error(err));
   };
@@ -88,14 +102,15 @@ const AppProvider = (props) => {
       questions,
       questionIndex,
       initialize,
-      selectScenario,
+      getScenario,
       submitAnswer,
       showFirstQuestion,
       showNextQuestion,
       saveAnswer,
-      scenarios,
-      getScenarios,
+      allScenarios,
+      getAllScenarios,
       currentScenario,
+      setSelectedScenarios,
     }}
     >
       {props.children}

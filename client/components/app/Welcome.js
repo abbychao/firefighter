@@ -3,14 +3,15 @@ import AppContext from './Context';
 
 const Welcome = () => {
   const context = useContext(AppContext);
-  const { scenarios, getScenarios } = context;
+  const {
+    getScenario, allScenarios, getAllScenarios, setSelectedScenarios,
+  } = context;
   const [selections, setSelections] = useState({
     building: null,
     buildingDetails: null,
     position: null,
     due: null,
   });
-
   const getOptionHTML = (set) => [...set].map((item) => (
     <option key={`option-${item}`}>
       {item}
@@ -19,28 +20,28 @@ const Welcome = () => {
   const handleSelection = (e) => {
     const { name } = e.target;
     let { value } = e.target;
-    const result = {};
     if (
       value === 'Building Type'
       || value === 'Details'
       || value === 'Position'
       || value === 'Due'
     ) value = null;
+    const result = {};
     result[name] = value;
     setSelections({ ...selections, ...result });
+    setSelectedScenarios(selectedScenarios);
   };
 
-  useEffect(getScenarios, []);
+  useEffect(getAllScenarios, []);
 
-  const scenariosHTML = [];
   const buildingSet = new Set(['Building Type']);
   const buildingDetailsSet = new Set(['Details']);
   const positionSet = new Set(['Position']);
   const dueSet = new Set(['Due']);
-
-  const selectedScenarios = scenarios.filter((scenario) => {
+  const selectedScenarios = allScenarios.filter((scenario) => {
     if (selections.building && scenario.building !== selections.building) return false;
-    if (selections.buildingDetails && scenario.buildingDetails !== selections.buildingDetails) return false;
+    if (selections.buildingDetails
+      && scenario.buildingDetails !== selections.buildingDetails) return false;
     if (selections.position && scenario.position !== selections.position) return false;
     if (selections.due && scenario.due !== selections.due) return false;
     return true;
@@ -57,17 +58,6 @@ const Welcome = () => {
     buildingDetailsSet.add(buildingDetails);
     positionSet.add(position);
     dueSet.add(due);
-    const name = `${building} ${buildingDetails} ${position} ${due} Due`;
-    scenariosHTML.push(
-      <button
-        onClick={context.selectScenario}
-        value={scenario._id}
-        key={`scenario${scenario._id}`}
-        type="button"
-      >
-        {name}
-      </button>,
-    );
   });
 
   const buildingHTML = getOptionHTML(buildingSet);
@@ -81,7 +71,7 @@ const Welcome = () => {
       <h1>Welcome!</h1>
       <p>Get ready to ace the Lieutenant's exam! This simulation will help you prepare.</p>
       <p>What is your scenario?</p>
-      <select name="building" onChange={handleSelection} >
+      <select name="building" onChange={handleSelection}>
         {buildingHTML}
       </select>
       <select name="buildingDetail" onChange={handleSelection}>
@@ -93,11 +83,9 @@ const Welcome = () => {
       <select name="due" onChange={handleSelection}>
         {dueHTML}
       </select>
-      <button type="button">Start</button>
+      <button type="button" onClick={getScenario}>Start</button>
       <br />
-      <i>{scenarios.length} scenarios selected</i>
-      <br />
-      {scenariosHTML}
+      <i>{selectedScenarios.length} scenarios selected.</i>
     </ >
   );
 };
