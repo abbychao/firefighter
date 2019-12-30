@@ -4,11 +4,11 @@ import AdminContext from './Context';
 
 const ScenarioMenu = ({ onChange }) => {
   const context = useContext(AdminContext);
-  const { scenarios, getScenarios } = context;
+  const { allScenarios, getAllScenarios } = context;
 
-  useEffect(getScenarios, []);
+  useEffect(getAllScenarios, []);
 
-  const scenariosArray = scenarios.map((scenario) => {
+  const scenariosArray = allScenarios.map((scenario) => {
     return (
       <option value={scenario._id} key={scenario._id}>
         {`${scenario.building} ${scenario.buildingDetails}, ${scenario.position}, ${scenario.due} Due`}

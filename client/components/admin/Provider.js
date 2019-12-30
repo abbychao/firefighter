@@ -5,14 +5,14 @@ const AdminProvider = ({ setView, children }) => {
   const [displayQs, setDisplayQs] = useState([]);
   const [currentQ, setCurrentQ] = useState({});
   const [showForm, setShowForm] = useState(false);
-  const [scenarios, setScenarios] = useState([]); // Replicated in App
+  const [allScenarios, setAllScenarios] = useState([]); // Replicated in App
 
-  // getScenarios is replicated in Admin
-  const getScenarios = () => {
+  // getAllScenarios is replicated in Admin
+  const getAllScenarios = () => {
     fetch('/api/scenarios/all')
       .then((data) => data.json())
       .then((scenariosArray) => {
-        setScenarios(scenariosArray);
+        setAllScenarios(scenariosArray);
       })
       .catch((err) => console.error(err));
   };
@@ -56,8 +56,8 @@ const AdminProvider = ({ setView, children }) => {
       setCurrentQ,
       showForm,
       setShowForm,
-      scenarios,
-      getScenarios,
+      allScenarios,
+      getAllScenarios,
       getQs,
     }}
     >
