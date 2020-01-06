@@ -14,7 +14,7 @@ scenarioController.create = async (req, res) => {
     first: null,
     last: null,
   };
-  const scenarioId = await ScenarioModel.createScenario(data);
+  const scenarioId = await ScenarioModel.create(data);
   return res.status(200).send(scenarioId);
 };
 

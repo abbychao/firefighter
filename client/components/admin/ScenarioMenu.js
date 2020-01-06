@@ -20,7 +20,7 @@ const ScenarioMenu = ({ onChange, selectedScenarioId }) => {
   // TODO: Find a way to show current scenario correctly
   return (
     <select onChange={onChange}>
-      <option value="none">Select a scenario...</option>
+      <option value="all">Select a scenario...</option>
       {scenariosArray}
     </select>
   );

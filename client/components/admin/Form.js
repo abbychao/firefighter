@@ -46,7 +46,7 @@ const Form = () => {
     };
     fetch(`/api/questions/id/${currentQ._id}`, fetchOptions)
       .then(res => {
-        context.setShowForm(false);
+        setShowForm('none');
         alert('Saved!');
         getQs();
       })
@@ -70,7 +70,7 @@ const Form = () => {
     };
     fetch(`/api/questions/id/${currentQ._id}`, fetchOptions)
       .then(res => {
-        setShowForm(false);
+        setShowForm('none');
         alert('Deleted!');
         getQs();
       })
@@ -92,7 +92,7 @@ const Form = () => {
     };
     fetch('/api/questions', fetchOptions)
       .then(res => {
-        setShowForm(false);
+        setShowForm('none');
         alert('Created!');
         getQs();
       })
