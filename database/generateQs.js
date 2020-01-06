@@ -1,5 +1,5 @@
 const database = require('./database.js');
-const Model = require('./Model.js');
+const Model = require('./model.js');
 
 // To enter Mongo shell: mongo --shell
 
