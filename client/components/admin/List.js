@@ -17,7 +17,7 @@ const List = () => {
   async function handleNewQuestionClick() {
     // TODO: if a question is currently open with unsaved changes, prompt to save
     // TODO: Switching between questions should also test for unsaved changes
-    if (showForm) {
+    if (showForm === 'question') {
       const readyForNewForm = confirm('Do you wish to abandon changes?');
       if (!readyForNewForm) return;
     }
@@ -30,7 +30,7 @@ const List = () => {
       answerImage: '',
       explanation: '',
     };
-    setShowForm(false);
+    setShowForm('none');
     await setCurrentQ(newQ);
     await setShowForm(true);
     // if not, then populate the body with blank form
@@ -40,7 +40,7 @@ const List = () => {
 
   return (
     <div id="list">
-      <input type="button" onClick={() => alert("Coming soon!")} value="New Scenario" />
+      <input type="button" onClick={() => setShowForm('scenario')} value="New Scenario" />
       <input type="button" onClick={handleNewQuestionClick} value="New Question" />
       <br />
       <br />

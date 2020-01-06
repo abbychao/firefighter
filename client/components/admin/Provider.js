@@ -4,7 +4,7 @@ import AdminContext from './Context';
 const AdminProvider = ({ setView, children }) => {
   const [displayQs, setDisplayQs] = useState([]);
   const [currentQ, setCurrentQ] = useState({});
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState('none');
   const [allScenarios, setAllScenarios] = useState([]); // Replicated in App
 
   // getAllScenarios is replicated in Admin
@@ -18,16 +18,13 @@ const AdminProvider = ({ setView, children }) => {
   };
   function getQs(scenarioId) {
     fetch(scenarioId === undefined ? '/api/questions/all' : `/api/questions/s/${scenarioId}`)
-      .then(data => data.json())
+      .then((data) => data.json())
       .then((questions) => {
-        const questionsArr = [];
-        questions.forEach((q) => {
-          questionsArr.push(
-            <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
-              {q.question}
-            </li>
-          );
-        });
+        const questionsArr = questions[0] === null ? [] : questions.map((q) => (
+          <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
+            {q.question}
+          </li>
+        ));
         setDisplayQs(questionsArr);
       })
       .catch(err => console.error(err));
@@ -37,9 +34,9 @@ const AdminProvider = ({ setView, children }) => {
     const id = name.slice(1, name.length);
     getQById(id)
       .then((result) => {
-        setShowForm(false);
+        setShowForm('none');
         setCurrentQ(result);
-        setShowForm(true);
+        setShowForm('question');
       });
   }
   function getQById(id) {

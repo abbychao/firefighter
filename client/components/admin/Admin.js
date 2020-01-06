@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Nav from './Nav';
 import List from './List';
 import Form from './Form';
+import ScenarioForm from './ScenarioForm';
 import AdminContext from './Context';
 
 const StyledAdmin = styled.div`
@@ -24,7 +25,8 @@ const Admin = () => {
       <Nav />
       <div id="body">
         <List />
-        {showForm && <Form currentQ={currentQ} />}
+        {showForm === 'question' && <Form currentQ={currentQ} />}
+        {showForm === 'scenario' && <ScenarioForm />}
       </div>
     </StyledAdmin>
   );
