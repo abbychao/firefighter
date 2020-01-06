@@ -2,15 +2,16 @@ import React, { useContext, useEffect } from 'react';
 import AdminContext from './Context';
 
 
-const ScenarioMenu = ({ onChange }) => {
+const ScenarioMenu = ({ onChange, selectedScenarioId }) => {
   const context = useContext(AdminContext);
   const { allScenarios, getAllScenarios } = context;
 
   useEffect(getAllScenarios, []);
 
   const scenariosArray = allScenarios.map((scenario) => {
+    const selected = scenario._id === selectedScenarioId;
     return (
-      <option value={scenario._id} key={scenario._id}>
+      <option value={scenario._id} key={scenario._id} selected={selected}>
         {`${scenario.building} ${scenario.buildingDetails}, ${scenario.position}, ${scenario.due} Due`}
       </option>
     );

@@ -132,7 +132,7 @@ const Form = () => {
     <StyledForm id="form">
       <label>
         Scenario:
-        <ScenarioMenu onChange={(e) => setScenarioId(e.target.value)} />
+        <ScenarioMenu onChange={(e) => setScenarioId(e.target.value)} selectedScenarioId={scenarioId} />
       </label>
       <label>
         Question:
