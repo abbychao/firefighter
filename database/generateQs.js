@@ -1,8 +1,25 @@
-const Question = require('./question-model.js');
+const database = require('./database.js');
+const Model = require('./Model.js');
 
 // To enter Mongo shell: mongo --shell
 
-const resetStarterQs = () => {
+const getScenarios = () => {
+  const scenario1 = {
+    building: 'Taxpayer',
+    buildingDetails: 'Store Fire',
+    position: 'Forcible Entry',
+    due: '1st',
+  };
+  const scenario2 = {
+    building: 'Taxpayer',
+    buildingDetails: 'Store Fire',
+    position: 'Can',
+    due: '2nd',
+  };
+  return [scenario1, scenario2];
+};
+
+const getQuestions1 = () => {
   const questions = [];
 
   // Forcible Entry Questions
@@ -56,7 +73,12 @@ const resetStarterQs = () => {
   q3.updatedAt = Date.now();
   questions.push(q3);
 
-  // Can Questions
+  return questions;
+};
+
+const getQuestions2 = () => {
+  const questions = [];
+
   const q4 = {};
   q4.scenario = 'Can - Store Fire – Taxpayer';
   q4.question = 'What tools do you bring?';
@@ -107,23 +129,27 @@ const resetStarterQs = () => {
   q6.updatedAt = Date.now();
   questions.push(q6);
 
-  refreshDB(questions);
+  return questions;
 };
 
-function refreshDB(questions) {
-  Question.deleteMany({}, (err, res) => {
-    console.log('refreshed database: ', err ? err : res);
-    // TODO: Use Model.bulkWrite instead of Model.create
-    Question.create(questions, (err) => {
-      if (err) console.log('mongoose create', err);
-    });
+const resetStarterQs = async () => {
+  await database.Scenario.deleteMany({}, (err, res) => {
+    console.log('cleared scenarios: ', err || res);
   });
-  await QuestionModel.Scenario.deleteMany({}, (err, res) => {
-    console.log('refreshed scenarios: ', err || res);
+  await database.Question.deleteMany({}, (err, res) => {
+    console.log('cleared questions: ', err || res);
   });
-  for (let i = 0; i < questions.length; i += 1) {
-    await QuestionModel.createQuestion(questions[i]);
+
+  const [scenario1, scenario2] = getScenarios();
+  const scenarioId1 = await Model.createScenario(scenario1);
+  const scenarioId2 = await Model.createScenario(scenario2);
+  const questions1 = getQuestions1();
+  const questions2 = getQuestions2();
+  // For each question in the arrays above, add it to the appropriate scenario
+  for (let i = 0; i < questions1.length; i++) {
+    await Model.addQuestion(scenarioId1, questions1[i]);
+    await Model.addQuestion(scenarioId2, questions2[i]);
   }
-}
+};
 
 module.exports = resetStarterQs;

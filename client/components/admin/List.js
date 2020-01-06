@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 // regeneratorRuntime allows us to use async/await in handleNewClick function
 import regeneratorRuntime from "regenerator-runtime";
 import AdminContext from './Context';
+import ScenarioMenu from './ScenarioMenu';
 
 const List = () => {
   const context = useContext(AdminContext);
@@ -10,12 +11,10 @@ const List = () => {
     setCurrentQ,
     showForm,
     setShowForm,
-    scenarios,
-    getScenarios,
     getQs,
   } = context;
 
-  async function handleNewClick() {
+  async function handleNewQuestionClick() {
     // TODO: if a question is currently open with unsaved changes, prompt to save
     // TODO: Switching between questions should also test for unsaved changes
     if (showForm) {
@@ -38,17 +37,14 @@ const List = () => {
   }
 
   useEffect(getQs, []);
-  useEffect(getScenarios, []);
-
-  const scenariosArray = scenarios.map((scenario) => <option value={scenario} key={scenario}>{scenario}</option>);
 
   return (
     <div id="list">
-      <select onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }}>
-        <option value="all"> All Scenarios</option>
-        {scenariosArray}
-      </select>
-      <input type="button" onClick={handleNewClick} value="New Question" />
+      <input type="button" onClick={() => alert("Coming soon!")} value="New Scenario" />
+      <input type="button" onClick={handleNewQuestionClick} value="New Question" />
+      <br />
+      <br />
+      <ScenarioMenu onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }} />
       {displayQs}
     </div>
   );

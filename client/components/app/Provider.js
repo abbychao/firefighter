@@ -22,15 +22,19 @@ const AppProvider = (props) => {
   const [scenarioWon, setScenarioWon] = useState(true);
   const [questions, setQuestions] = useState(initialQuestionArray);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [scenarios, setScenarios] = useState([]); // Replicated in Admin
+  const [allScenarios, setAllScenarios] = useState([]); // Replicated in Admin
+  const [currentScenario, setScenario] = useState({});
+  const [selectedScenarios, setSelectedScenarios] = useState([]);
+  const [nextScenarioIndex, setNextScenarioIndex] = useState(0);
 
 
-  // getScenarios is replicated in Admin
-  const getScenarios = () => {
+  // getAllScenarios is replicated in Admin
+  const getAllScenarios = () => {
     fetch('/api/scenarios/all')
       .then((data) => data.json())
       .then((scenariosArray) => {
-        setScenarios(scenariosArray);
+        setAllScenarios(scenariosArray);
+        if (selectedScenarios.length === 0) setSelectedScenarios(scenariosArray);
       })
       .catch((err) => console.error(err));
   };
@@ -42,14 +46,33 @@ const AppProvider = (props) => {
     setQuestions(initialQuestionArray);
     setQuestionIndex(0);
   };
-  const selectScenario = (e) => {
-    const scenario = e.target.value;
-    fetch(`/api/questions/scenario/${scenario}`)
+  const getScenario = () => {
+    /**
+    * Randomize array element order in-place.
+    * Using Durstenfeld shuffle algorithm.
+    */
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    const shuffledScenarios = nextScenarioIndex === 0 ? shuffle(selectedScenarios) : selectedScenarios;
+    if (nextScenarioIndex === 0) setSelectedScenarios(shuffledScenarios);
+    const scenarioId = shuffledScenarios[nextScenarioIndex]._id;
+    setNextScenarioIndex(nextScenarioIndex + 1);
+    fetch(`/api/scenarios/id/${scenarioId}`)
       .then((data) => data.json())
-      .then((data) => {
-        setScreen('start');
-        setQuestions(data);
+      .then((scenario) => {
+        setScenario(scenario);
       })
+      .catch((err) => console.error(err));
+    fetch(`/api/questions/s/${scenarioId}`)
+      .then((data) => data.json())
+      .then((data) => setQuestions(data))
+      .then(() => setQuestionIndex(0))
+      .then(() => setScreen('start'))
       .catch((err) => console.error(err));
   };
   const submitAnswer = () => {
@@ -82,13 +105,17 @@ const AppProvider = (props) => {
       questions,
       questionIndex,
       initialize,
-      selectScenario,
+      getScenario,
       submitAnswer,
       showFirstQuestion,
       showNextQuestion,
       saveAnswer,
-      scenarios,
-      getScenarios,
+      allScenarios,
+      getAllScenarios,
+      currentScenario,
+      selectedScenarios,
+      setSelectedScenarios,
+      nextScenarioIndex,
     }}
     >
       {props.children}

@@ -5,26 +5,26 @@ const AdminProvider = ({ setView, children }) => {
   const [displayQs, setDisplayQs] = useState([]);
   const [currentQ, setCurrentQ] = useState({});
   const [showForm, setShowForm] = useState(false);
-  const [scenarios, setScenarios] = useState([]); // Replicated in App
+  const [allScenarios, setAllScenarios] = useState([]); // Replicated in App
 
-  // getScenarios is replicated in Admin
-  const getScenarios = () => {
+  // getAllScenarios is replicated in Admin
+  const getAllScenarios = () => {
     fetch('/api/scenarios/all')
       .then((data) => data.json())
       .then((scenariosArray) => {
-        setScenarios(scenariosArray);
+        setAllScenarios(scenariosArray);
       })
       .catch((err) => console.error(err));
   };
-  function getQs(scenario) {
-    fetch(scenario === undefined ? '/api/questions/all' : `/api/questions/scenario/${scenario}`)
+  function getQs(scenarioId) {
+    fetch(scenarioId === undefined ? '/api/questions/all' : `/api/questions/s/${scenarioId}`)
       .then(data => data.json())
       .then((questions) => {
         const questionsArr = [];
         questions.forEach((q) => {
           questionsArr.push(
             <li name={`q${q._id}`} key={`q${q._id}`} onClick={handleQuestionClick}>
-              {q.scenario} {q.question}
+              {q.question}
             </li>
           );
         });
@@ -38,7 +38,7 @@ const AdminProvider = ({ setView, children }) => {
     getQById(id)
       .then((result) => {
         setShowForm(false);
-        setCurrentQ(result[0]);
+        setCurrentQ(result);
         setShowForm(true);
       });
   }
@@ -56,8 +56,8 @@ const AdminProvider = ({ setView, children }) => {
       setCurrentQ,
       showForm,
       setShowForm,
-      scenarios,
-      getScenarios,
+      allScenarios,
+      getAllScenarios,
       getQs,
     }}
     >
