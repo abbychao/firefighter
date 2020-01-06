@@ -14,7 +14,7 @@ const List = () => {
     getQs,
   } = context;
 
-  async function handleNewClick() {
+  async function handleNewQuestionClick() {
     // TODO: if a question is currently open with unsaved changes, prompt to save
     // TODO: Switching between questions should also test for unsaved changes
     if (showForm) {
@@ -40,8 +40,11 @@ const List = () => {
 
   return (
     <div id="list">
+      <input type="button" onClick={() => alert("Coming soon!")} value="New Scenario" />
+      <input type="button" onClick={handleNewQuestionClick} value="New Question" />
+      <br />
+      <br />
       <ScenarioMenu onChange={(e) => { getQs(e.target.value === 'all' ? undefined : e.target.value); }} />
-      <input type="button" onClick={handleNewClick} value="New Question" />
       {displayQs}
     </div>
   );
