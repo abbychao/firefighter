@@ -6,7 +6,7 @@ const questionController = require('./questionController.js');
 const scenarioController = require('./scenarioController.js');
 const resetQs = require('../database/generateQs.js');
 
-resetQs();
+if (process.env.NODE_ENV !== 'production') resetQs();
 
 const app = express();
 app.use(bodyParser.json());
