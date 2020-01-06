@@ -25,6 +25,7 @@ const AppProvider = (props) => {
   const [allScenarios, setAllScenarios] = useState([]); // Replicated in Admin
   const [currentScenario, setScenario] = useState({});
   const [selectedScenarios, setSelectedScenarios] = useState([]);
+  const [nextScenarioIndex, setNextScenarioIndex] = useState(0);
 
 
   // getAllScenarios is replicated in Admin
@@ -33,6 +34,7 @@ const AppProvider = (props) => {
       .then((data) => data.json())
       .then((scenariosArray) => {
         setAllScenarios(scenariosArray);
+        if (selectedScenarios.length === 0) setSelectedScenarios(scenariosArray);
       })
       .catch((err) => console.error(err));
   };
@@ -44,7 +46,7 @@ const AppProvider = (props) => {
     setQuestions(initialQuestionArray);
     setQuestionIndex(0);
   };
-  const getScenario = (e) => {
+  const getScenario = () => {
     /**
     * Randomize array element order in-place.
     * Using Durstenfeld shuffle algorithm.
@@ -56,8 +58,10 @@ const AppProvider = (props) => {
       }
       return array;
     }
-    const shuffledScenarios = shuffle(selectedScenarios);
-    const scenarioId = shuffledScenarios[0]._id;
+    const shuffledScenarios = nextScenarioIndex === 0 ? shuffle(selectedScenarios) : selectedScenarios;
+    if (nextScenarioIndex === 0) setSelectedScenarios(shuffledScenarios);
+    const scenarioId = shuffledScenarios[nextScenarioIndex]._id;
+    setNextScenarioIndex(nextScenarioIndex + 1);
     fetch(`/api/scenarios/id/${scenarioId}`)
       .then((data) => data.json())
       .then((scenario) => {
@@ -66,10 +70,9 @@ const AppProvider = (props) => {
       .catch((err) => console.error(err));
     fetch(`/api/questions/s/${scenarioId}`)
       .then((data) => data.json())
-      .then((data) => {
-        setScreen('start');
-        setQuestions(data);
-      })
+      .then((data) => setQuestions(data))
+      .then(() => setQuestionIndex(0))
+      .then(() => setScreen('start'))
       .catch((err) => console.error(err));
   };
   const submitAnswer = () => {
@@ -110,7 +113,9 @@ const AppProvider = (props) => {
       allScenarios,
       getAllScenarios,
       currentScenario,
+      selectedScenarios,
       setSelectedScenarios,
+      nextScenarioIndex,
     }}
     >
       {props.children}

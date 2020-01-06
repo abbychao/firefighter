@@ -83,7 +83,7 @@ const Welcome = () => {
       <select name="due" onChange={handleSelection}>
         {dueHTML}
       </select>
-      <button type="button" onClick={getScenario}>Start</button>
+      <button type="button" onClick={() => getScenario(0)}>Start</button>
       <br />
       <i>{selectedScenarios.length} scenarios selected.</i>
     </ >
