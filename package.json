@@ -31,23 +31,23 @@
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.3",
     "styled-components": "^4.4.1",
-    "webpack": "^4.41.4"
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.0",
+    "css-loader": "^6.7.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "mini-css-extract-plugin": "^0.7.0",
-    "style-loader": "^0.23.1",
-    "webpack-cli": "^3.3.10",
+    "mini-css-extract-plugin": "^2.7.2",
+    "style-loader": "^3.3.1",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^3.10.1"
   }
 }
